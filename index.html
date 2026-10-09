@@ -125,6 +125,37 @@ input{-webkit-user-select:auto;user-select:auto}
 .menu-btn{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:62px;padding:8px 4px;border-radius:16px;border:1.5px solid var(--line);background:rgba(20,5,28,.7);color:var(--rose);font-weight:700;font-size:13px}
 .menu-btn svg{width:22px;height:22px}
 .menu-btn .dot{position:absolute;top:8px;right:14px;width:9px;height:9px;border-radius:50%;background:var(--pink);box-shadow:0 0 8px var(--pink)}
+
+/* selfie / fan cam */
+.menu-row{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:min(100%,400px)}
+.menu-btn{font-size:12.5px}
+.menu-btn .dot{right:10px}
+.cam{position:relative;align-self:center;width:min(78vw,300px);aspect-ratio:1.3;border-radius:22px;padding:9px;background:linear-gradient(160deg,#ff6bb5,#d61f7d);box-shadow:0 0 0 3px rgba(255,79,163,.25),0 0 40px rgba(255,45,143,.45);box-sizing:border-box}
+.cam-screen{position:relative;width:100%;height:100%;border-radius:14px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#6a1f74,#22072a 75%)}
+.cam-screen::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,211,232,.16) 1px,transparent 1.6px);background-size:7px 7px}
+.cam-screen::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.09) 0 2px,transparent 2px 5px);pointer-events:none}
+.cam-screen img{position:absolute;left:50%;bottom:-3%;height:98%;transform:translateX(-50%);animation:camBob .517s ease-out infinite}
+@keyframes camBob{0%{transform:translateX(-50%) translateY(-3%) scale(1.03)}100%{transform:translateX(-50%) translateY(0) scale(1)}}
+.cam-empty{position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,211,232,.42)}
+.cam-empty svg{width:42%;height:auto}
+.cam-label{position:absolute;left:18px;top:-12px;background:var(--gold);color:#2a0a2f;font-family:var(--num);font-size:13px;letter-spacing:.06em;padding:4px 10px;border-radius:999px;box-shadow:0 3px 0 var(--gold-deep)}
+.cam-live{position:absolute;right:20px;top:18px;font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--cream);display:flex;align-items:center;gap:5px;z-index:2}
+.cam-live i{width:8px;height:8px;border-radius:50%;background:#ff3b3b;box-shadow:0 0 8px #ff3b3b;animation:pulse 1s ease-in-out infinite}
+.cam.busy .cam-screen{animation:pulse 1s ease-in-out infinite}
+.privacy{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;color:var(--rose);background:rgba(54,240,212,.08);border:1px solid rgba(54,240,212,.35);border-radius:14px;padding:10px 12px}
+.privacy svg{flex:none;width:18px;height:18px;margin-top:1px;color:var(--teal)}
+.sel-actions{display:flex;flex-direction:column;gap:10px}
+.sel-actions .btn{width:100%}
+.cam-hint{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:10px 12px;border-radius:18px;border:1.5px dashed rgba(255,79,163,.55);background:rgba(255,79,163,.08);text-align:left}
+.cam-hint .mini{width:52px;height:40px;border-radius:9px;background:linear-gradient(160deg,#ff6bb5,#d61f7d);display:grid;place-items:center;color:var(--cream)}
+.cam-hint .mini svg{width:24px;height:24px}
+.cam-hint b{display:block;font-size:14px}
+.cam-hint span{font-size:12.5px;color:var(--muted);line-height:1.35}
+.cam-hint .msg{grid-column:1/-1}
+#shareCard{z-index:25;background:rgba(10,2,16,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#shareCard:not([hidden]){animation:fadeIn .2s ease-out both}
+.card-img{display:block;width:100%;max-height:58vh;object-fit:contain;border-radius:18px;box-shadow:0 14px 40px rgba(0,0,0,.55),0 0 0 1px rgba(255,211,232,.14);background:#160520;-webkit-touch-callout:default;user-select:auto;-webkit-user-select:auto}
+.card-wait{display:grid;place-items:center;aspect-ratio:4/5;max-height:58vh;border-radius:18px;background:rgba(255,255,255,.04);color:var(--muted);font-weight:700}
 /* full-screen panels */
 .panel-ov{background:rgba(12,3,20,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .panel-ov:not([hidden]){animation:fadeIn .25s ease-out both}
@@ -247,6 +278,7 @@ input[type=range]{width:100%;accent-color:var(--pink);height:32px}
     <nav class="menu-row" aria-label="Menu">
       <button class="menu-btn" type="button" data-open="ranking"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V12M12 20V5M19 20v-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>Ranking</button>
       <button class="menu-btn" type="button" data-open="badges"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M8.5 13.5 7 21l5-2.6 5 2.6-1.5-7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></svg>Odznaki<span class="dot" id="badgeDot" hidden></span></button>
+      <button class="menu-btn" type="button" data-open="selfie"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6.5" width="19" height="13" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M8.5 6.5 10 4h4l1.5 2.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Selfie<span class="dot" id="selfieDot" hidden></span></button>
       <button class="menu-btn" type="button" data-open="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="7" r="2.4" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="10" cy="17" r="2.4" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Ustawienia</button>
     </nav>
   </section>
@@ -274,6 +306,21 @@ input[type=range]{width:100%;accent-color:var(--pink);height:32px}
     <div class="wrap">
       <header class="top"><button class="back" type="button" data-back aria-label="Wróć"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h2>Odznaki</h2><p class="top-sub" id="badgeCount">0 z 9</p></div></header>
       <div class="badge-grid" id="badgeGrid"></div>
+    </div>
+  </section>
+
+  <section id="selfie" class="ov panel-ov" hidden aria-label="Selfie na telebim">
+    <div class="wrap">
+      <header class="top"><button class="back" type="button" data-back aria-label="Wróć"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h2>Fan cam</h2><p class="top-sub">Twoja twarz na telebimie nad sceną</p></div></header>
+      <div class="cam" id="selfieCam"><span class="cam-label">FAN CAM</span><span class="cam-live"><i></i>LIVE</span><div class="cam-screen"><img id="selfieImg" alt="Twoje selfie na telebimie" hidden><div class="cam-empty" id="selfieEmpty"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="3"/><path d="M8 44c1.5-9 8-14 16-14s14.5 5 16 14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div></div></div>
+      <p class="txt" id="selfieTxt">Dodaj selfie, a gra wytnie z niego Twoją głowę. Pojawisz się na telebimie przy solówce i przy combo 50 i 100. Twoja twarz trafi też na kartę wyniku, którą wyślesz znajomym.</p>
+      <div class="sel-actions">
+        <button class="btn btn-primary" id="selfieAdd" type="button">Dodaj selfie</button>
+        <button class="btn" id="selfieDel" type="button" hidden>Usuń selfie</button>
+        <p class="msg" data-selfie-msg role="status" style="text-align:center"></p>
+      </div>
+      <div class="privacy"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3.5" y="9" width="13" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6.5 9V6.5a3.5 3.5 0 0 1 7 0V9" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>Zdjęcie zostaje na tym urządzeniu. Nic nie jest wysyłane do internetu. Za pierwszym razem gra pobiera ok. 30 MB narzędzi do rozpoznawania twarzy.</span></div>
+      <input type="file" id="selfieFile" accept="image/*" hidden>
     </div>
   </section>
 
@@ -364,11 +411,34 @@ input[type=range]{width:100%;accent-color:var(--pink);height:32px}
         </form>
       </div>
       <div class="actions">
-        <button class="btn" id="shareBtn" type="button">Pochwal się wynikiem</button>
+        <div class="cam-hint" id="resCamHint" hidden>
+          <span class="mini"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="10" r="4.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M4.5 21c1-4.5 4-7 7.5-7s6.5 2.5 7.5 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+          <span><b>Pokaż się na telebimie</b><span>Dodaj selfie: zobaczysz się nad sceną i na karcie wyniku.</span></span>
+          <button class="btn-sm" id="resCamAdd" type="button">Dodaj</button>
+          <p class="msg" data-selfie-msg role="status"></p>
+        </div>
+        <button class="btn btn-primary" id="shareBtn" type="button">Pochwal się wynikiem</button>
         <p class="msg" id="shareMsg" role="status" style="text-align:center"></p>
         <a class="btn" href="https://www.nowakowski.net.pl" target="_blank" rel="noopener">Więcej muzyki: nowakowski.net.pl</a>
       </div>
       <p class="note">Prototyp: ranking i zapis działają na razie tylko na tym urządzeniu.</p>
+    </div>
+  </section>
+
+  <section id="shareCard" class="ov" hidden aria-label="Karta wyniku">
+    <div class="wrap">
+      <header class="top"><button class="back" type="button" id="cardClose" aria-label="Wróć do wyniku"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h2>Karta wyniku</h2><p class="top-sub">Wyślij znajomym albo wrzuć na story</p></div></header>
+      <div class="card-wait" id="cardWait">Rysuję kartę…</div>
+      <img class="card-img" id="cardImg" alt="Karta z Twoim wynikiem w Funky Cat" hidden>
+      <div class="sel-actions">
+        <button class="btn btn-primary" id="cardShare" type="button" hidden>Udostępnij</button>
+        <a class="btn" id="cardSave" download="funky-cat-wynik.png" href="#">Zapisz obrazek</a>
+        <button class="btn" id="cardCopy" type="button">Skopiuj link do gry</button>
+        <button class="btn" id="cardSelfie" type="button">Dodaj swoje selfie do karty</button>
+        <p class="msg" data-selfie-msg role="status" style="text-align:center"></p>
+        <p class="msg" id="cardMsg" role="status" style="text-align:center"></p>
+      </div>
+      <p class="note">Na telefonie możesz też przytrzymać obrazek palcem i wybrać „Zapisz”.</p>
     </div>
   </section>
 
@@ -1478,7 +1548,7 @@ var sfxOn = store.get('sfx', true);
 var G = {
   mode: 'title', t: -1, score: 0, shown: 0, combo: 0, maxCombo: 0, mult: 1, gold: 0, perfect: 0, drops: 0,
   bad: 0, rain: 0, solo: false, soloUntil: -1, head: 0, moved: 0, shake: 0, flash: 0, flashCol: '255,255,255',
-  comboPop: 0, multPop: 0, fired: {}, bot: false, bonus: 0, soloCaught: false, fx: 0, fy: 0, cheer: 0, ended: false, ledGlitch: 0, ledMsg: null, ledMsgUntil: 0
+  comboPop: 0, multPop: 0, fired: {}, bot: false, bonus: 0, soloCaught: false, fx: 0, fy: 0, cheer: 0, ended: false, ledGlitch: 0, ledMsg: null, ledMsgUntil: 0, cam: null
 };
 var clockNow = 0, modeSince = 0, lastMode = 'title', frameNo = 0;
 
@@ -1486,7 +1556,7 @@ function resetRound() {
   NOTES.forEach(function (n) { n.st = 0; n.ft = 0; });
   G.t = -0.2; G.score = 0; G.shown = 0; G.combo = 0; G.maxCombo = 0; G.mult = 1; G.gold = 0; G.perfect = 0;
   G.drops = 0; G.bad = 0; G.rain = 0; G.solo = false; G.soloUntil = -1; G.head = 0; G.moved = 0; G.shake = 0;
-  G.flash = 0; G.comboPop = 0; G.multPop = 0; G.fired = {}; G.ended = false; G.ledGlitch = 0; G.ledMsg = null; G.cheer = 0; G.bonus = 0; G.soloCaught = false;
+  G.flash = 0; G.comboPop = 0; G.multPop = 0; G.fired = {}; G.ended = false; G.ledGlitch = 0; G.ledMsg = null; G.cam = null; G.cheer = 0; G.bonus = 0; G.soloCaught = false;
   cat.x = 0.5; cat.tx = 0.5; cat.vx = 0; cat.lean = 0; cat.squash = 0; cat.dizzy = 0; cat.flash = 0; cat.raise = 0;
   PARTS.forEach(function (p) { p.on = false; }); RINGS.forEach(function (r) { r.on = false; }); TEXTS.forEach(function (t) { t.on = false; });
   BANNERS.length = 0;
@@ -1567,6 +1637,7 @@ function onCatch(n, dx, t) {
       banner(G.combo + ' combo!', { dur: 1.0, size: 0.62, col: C.cream, shade: C.pink, y: 0.43 });
       confetti(26, sx, sy - 40, 30);
     }
+    if (G.combo === 50 || G.combo % 100 === 0) fanCam('combo', t, BEAT * 8);
     sfxCatch(n, perfect);
     if (n.k === K_SOLO) startSolo(n, t);
     if (n.k === K_FINAL) finale(n, t);
@@ -1612,6 +1683,7 @@ function startSolo(n, t) {
   G.flash = 0.55; G.flashCol = '255,120,200'; G.fx = PX + n.x * PW; G.fy = Y_CATCH;
   confetti(60, VW / 2, Y_SPAWN, VW * 0.4);
   G.ledMsg = 'solo'; G.ledMsgUntil = t + BEAT * 8;
+  fanCam('solo', t + BEAT * 4, BEAT * 10);
   sfxSolo(n);
 }
 function finale(n, t) {
@@ -1619,6 +1691,7 @@ function finale(n, t) {
   confetti(90, VW / 2, Y_SPAWN, VW * 0.45);
   G.flash = 0.55; G.flashCol = '255,220,150'; G.fx = PX + n.x * PW; G.fy = Y_CATCH; G.cheer = 1;
   G.ledMsg = 'brawo'; G.ledMsgUntil = t + 8;
+  fanCam('final', t + BEAT * 2, 8);
   sfxFinal(n);
 }
 
@@ -1689,8 +1762,8 @@ var playBtn = $('playBtn');
 var wakeLock = null;
 var screen = 'start';
 function show(id, on) { $(id).hidden = !on; }
-var PANELS = ['start', 'stages', 'ranking', 'badges', 'settings', 'calib'];
-var BACK_TO = { stages: 'start', ranking: 'start', badges: 'start', settings: 'start', calib: 'settings' };
+var PANELS = ['start', 'stages', 'ranking', 'badges', 'selfie', 'settings', 'calib'];
+var BACK_TO = { stages: 'start', ranking: 'start', badges: 'start', settings: 'start', selfie: 'start', calib: 'settings' };
 function openPanel(id) {
   if (screen === 'calib' && id !== 'calib') calibStop();
   PANELS.forEach(function (p) { show(p, p === id); });
@@ -1699,6 +1772,7 @@ function openPanel(id) {
   if (id === 'ranking') renderRanking();
   if (id === 'badges') { renderBadges(); store.set('badgeSeen', Object.keys(store.get('badges', {})).length); }
   if (id === 'settings') syncSettings();
+  if (id === 'selfie') { store.set('selfieSeen', 1); selfieMsg(''); syncSelfieUI(); probeSelfie(); }
   if (id === 'calib') calibReset();
   if (id === 'start') refreshTitle();
   var el = $(id);
@@ -1862,7 +1936,7 @@ function showResults() {
   info.best = Math.max(info.best, G.score); info.stars = Math.max(info.stars, stars);
   p[key] = info; store.set('prog', p);
   var nextUnlockedNow = STAGE + 1 < STAGES.length && unlocked(STAGE + 1);
-  lastRun = { s: G.score, stars: stars, saved: false, stage: STAGE };
+  lastRun = { s: G.score, stars: stars, saved: false, stage: STAGE, combo: G.maxCombo, gold: G.gold, goldTotal: GOLD_TOTAL };
   $('resStage').textContent = 'Etap ' + (STAGE + 1) + ' · ' + STAGES[STAGE].name;
   var last = STAGE === STAGES.length - 1;
   $('resTitle').textContent = last && stars >= 1 ? 'Cały utwór zagrany!' : (stars >= 2 ? 'Ale groove!' : 'Koniec etapu!');
@@ -1889,6 +1963,7 @@ function showResults() {
   $('nickInput').value = store.get('nick', '');
   $('nickBtn').disabled = false; $('nickBtn').textContent = 'Zapisz wynik';
   $('mailMsg').textContent = ''; $('mailMsg').className = 'msg'; $('shareMsg').textContent = '';
+  selfieMsg(''); syncSelfieUI(); probeSelfie();
   renderRank();
   show('results', true);
   $('results').scrollTop = 0;
@@ -1969,6 +2044,7 @@ $('mailForm').addEventListener('submit', function (e) {
 function refreshTitle() {
   var seen = store.get('badgeSeen', 0), have = Object.keys(store.get('badges', {})).length;
   $('badgeDot').hidden = have <= seen;
+  if (typeof syncSelfieUI === 'function' && $('selfieImg')) try { syncSelfieUI(); } catch (e) {}
   if (audioReady) { playBtn.disabled = false; playBtn.textContent = totalStars() ? 'GRAJ' : 'GRAJ'; }
 }
 playBtn.addEventListener('click', function () {
@@ -2053,15 +2129,376 @@ $('calibPad').addEventListener('keydown', function (e) { if (e.key === ' ' || e.
 $('calibSave').addEventListener('click', function () { CAL = CB.result; store.set('cal', CAL); openPanel('settings'); toast('Zapisano przesunięcie ' + (CAL > 0 ? '+' : '') + CAL + ' ms'); });
 $('calibCancel').addEventListener('click', function () { openPanel('settings'); });
 
-$('shareBtn').addEventListener('click', function () {
-  var txt = 'Mam ' + fmt(G.score) + ' pkt w etapie ' + (STAGE + 1) + ' gry Funky Cat na różowo, do muzyki Marcina Nowakowskiego. Pobijesz? https://mn74-pixel.github.io/Funky-Cat/';
-  var msg = $('shareMsg');
-  var showText = function () { msg.textContent = txt; };
-  var topLevel = false;
-  try { topLevel = window.top === window; } catch (e) {}
-  if (topLevel && navigator.share) { navigator.share({ text: txt }).catch(function () {}); return; }
-  try { navigator.clipboard.writeText(txt).then(function () { msg.textContent = 'Skopiowane. Wklej znajomym w wiadomości.'; }, showText); } catch (e) { showText(); }
+/* ================================================================ selfie: FAN CAM + share card */
+var GAME_URL = 'https://mn74-pixel.github.io/Funky-Cat/';
+var SELFIE = null;          // { neutral, happy, sing } Image objects, only when the player added a photo
+var selfieBusy = false, selfieOff = false, selfieMod = null, selfieProbe = null;
+function selfieReady(im) { return !!(im && im.complete && im.naturalWidth > 0); }
+function selfieFromUrls(u) {
+  if (!u || typeof u.neutral !== 'string' || u.neutral.indexOf('data:image/') !== 0) return null;
+  var o = {};
+  ['neutral', 'happy', 'sing'].forEach(function (k) {
+    var src = (typeof u[k] === 'string' && u[k].indexOf('data:image/') === 0) ? u[k] : u.neutral;
+    var im = new Image(); im.decoding = 'async'; im.src = src; o[k] = im;
+  });
+  return o;
+}
+SELFIE = selfieFromUrls(store.get('selfie', null));
+function saveSelfie(u) { try { localStorage.setItem('fcNR_selfie', JSON.stringify(u)); return true; } catch (e) { return false; } }
+function dropSelfie() { try { localStorage.removeItem('fcNR_selfie'); } catch (e) {} SELFIE = null; }
+
+// The face kit (MediaPipe, ~30 MB) only exists next to the full game, not inside previews.
+function probeSelfie() {
+  if (selfieProbe) return selfieProbe;
+  var p;
+  try { p = fetch('face/selfie.js', { method: 'HEAD', cache: 'no-store' }).then(function (r) { return r.ok; }); }
+  catch (e) { p = Promise.resolve(false); }
+  selfieProbe = p.catch(function () { return false; }).then(function (ok) { selfieOff = !ok; syncSelfieUI(); return ok; });
+  return selfieProbe;
+}
+function loadSelfieModule() {
+  if (selfieMod) return selfieMod;
+  var p;
+  try { p = (new Function('u', 'return import(u)'))(new URL('face/selfie.js', location.href).href); }
+  catch (e) { p = Promise.reject(e); }
+  selfieMod = p.catch(function (e) { selfieMod = null; throw e; });
+  return selfieMod;
+}
+function selfieMsg(t, err) {
+  Array.prototype.forEach.call(document.querySelectorAll('[data-selfie-msg]'), function (el) {
+    el.textContent = t || ''; el.className = 'msg' + (err ? ' err' : '');
+  });
+}
+var selfiePrevI = 0;
+function syncSelfieUI() {
+  var has = !!SELFIE;
+  $('selfieImg').hidden = !has; $('selfieEmpty').hidden = has;
+  if (has && $('selfieImg').getAttribute('src') !== SELFIE.happy.src) $('selfieImg').src = SELFIE.happy.src;
+  $('selfieCam').classList.toggle('busy', selfieBusy);
+  $('selfieAdd').textContent = selfieOff && !has ? 'Otwórz pełną wersję gry' : (selfieBusy ? 'Przygotowuję…' : (has ? 'Zmień selfie' : 'Dodaj selfie'));
+  $('selfieAdd').disabled = selfieBusy;
+  $('selfieDel').hidden = !has || selfieBusy;
+  $('cardSelfie').textContent = selfieBusy ? 'Przygotowuję selfie…' : (has ? 'Zmień selfie' : 'Dodaj swoje selfie do karty');
+  $('cardSelfie').disabled = selfieBusy;
+  $('cardSelfie').hidden = selfieOff;
+  $('resCamAdd').disabled = selfieBusy;
+  $('resCamHint').hidden = has || selfieOff;
+  $('selfieDot').hidden = has || !!store.get('selfieSeen', 0);
+}
+setInterval(function () {
+  if (!SELFIE || $('selfie').hidden || selfieBusy) return;
+  selfiePrevI++;
+  var k = ['happy', 'sing', 'happy', 'neutral'][selfiePrevI % 4];
+  if (selfieReady(SELFIE[k])) $('selfieImg').src = SELFIE[k].src;
+}, Math.round(BEAT * 2000));
+
+function pickSelfie() {
+  if (selfieBusy) return;
+  if (selfieOff) { try { window.open(GAME_URL, '_blank', 'noopener'); } catch (e) {} return; }
+  selfieMsg('');
+  $('selfieFile').click();
+}
+$('selfieAdd').addEventListener('click', pickSelfie);
+$('resCamAdd').addEventListener('click', pickSelfie);
+$('cardSelfie').addEventListener('click', pickSelfie);
+$('selfieDel').addEventListener('click', function () {
+  dropSelfie(); syncSelfieUI();
+  selfieMsg('Selfie usunięte z tego urządzenia.');
 });
+$('selfieFile').addEventListener('change', function () {
+  var f = this.files && this.files[0];
+  this.value = '';
+  if (!f || selfieBusy) return;
+  selfieBusy = true; syncSelfieUI();
+  selfieMsg('Uruchamiam rozpoznawanie twarzy…');
+  loadSelfieModule().then(function (m) {
+    return m.makeSelfie(f, function (s) { selfieMsg(s); });
+  }, function () {
+    selfieOff = true;
+    throw new Error('Selfie działa w pełnej wersji gry: mn74-pixel.github.io/Funky-Cat');
+  }).then(function (u) {
+    selfieBusy = false;
+    SELFIE = selfieFromUrls(u);
+    var kept = saveSelfie(u);
+    syncSelfieUI();
+    selfieMsg(kept ? 'Gotowe! Zobaczysz się na telebimie przy solówce i dużym combo.' : 'Gotowe, ale tylko do zamknięcia gry (brak miejsca w pamięci przeglądarki).');
+    if (!$('shareCard').hidden) SELFIE.happy.onload = function () { openCard(); };
+    if (!$('shareCard').hidden && selfieReady(SELFIE.happy)) openCard();
+  }).catch(function (e) {
+    selfieBusy = false; syncSelfieUI();
+    selfieMsg((e && e.message) || 'Nie udało się przygotować selfie. Spróbuj innego zdjęcia.', true);
+  });
+});
+
+/* ---------- jumbotron drawing (shared by the stage and the share card) */
+var camCache = {}, camCacheN = 0;
+function camLayers(w, h, res) {
+  var key = Math.round(w) + 'x' + Math.round(h) + '@' + res;
+  if (camCache[key]) return camCache[key];
+  if (++camCacheN > 6) { camCache = {}; camCacheN = 1; }
+  var m = Math.round(w * 0.14), pad = Math.max(4, w * 0.035), r = w * 0.075;
+  var sx = pad, sy = pad, sw = w - pad * 2, sh = h - pad * 2, sr = r * 0.62;
+  function layer(draw) {
+    var c = document.createElement('canvas');
+    c.width = Math.ceil((w + m * 2) * res); c.height = Math.ceil((h + m * 2) * res);
+    var x = c.getContext('2d'); x.scale(res, res); x.translate(m, m); draw(x); return c;
+  }
+  var bgL = layer(function (x) {
+    x.shadowColor = 'rgba(255,45,143,0.8)'; x.shadowBlur = m * 0.75 * res;
+    var gr = x.createLinearGradient(0, 0, w, h);
+    gr.addColorStop(0, '#ff8cc6'); gr.addColorStop(0.5, '#ff3d98'); gr.addColorStop(1, '#c4166f');
+    x.fillStyle = gr; rr(x, 0, 0, w, h, r); x.fill();
+    x.shadowBlur = 0; x.shadowColor = 'transparent';
+    x.strokeStyle = 'rgba(255,230,245,0.55)'; x.lineWidth = Math.max(1, w * 0.006);
+    rr(x, w * 0.01, w * 0.01, w - w * 0.02, h - w * 0.02, r * 0.9); x.stroke();
+    var rg = x.createRadialGradient(w / 2, sy + sh * 0.42, 0, w / 2, sy + sh * 0.42, sw * 0.68);
+    rg.addColorStop(0, '#7a2484'); rg.addColorStop(0.6, '#3a0d48'); rg.addColorStop(1, '#1a0522');
+    x.fillStyle = rg; rr(x, sx, sy, sw, sh, sr); x.fill();
+    x.save(); rr(x, sx, sy, sw, sh, sr); x.clip();
+    var step = Math.max(4, sw / 34);
+    x.fillStyle = 'rgba(255,211,232,0.13)';
+    for (var yy = sy + step / 2; yy < sy + sh; yy += step) {
+      for (var xx = sx + step / 2; xx < sx + sw; xx += step) { x.beginPath(); x.arc(xx, yy, step * 0.2, 0, TAU); x.fill(); }
+    }
+    x.restore();
+  });
+  var ovL = layer(function (x) {
+    x.save(); rr(x, sx, sy, sw, sh, sr); x.clip();
+    var ls = Math.max(3, sh / 42);
+    x.fillStyle = 'rgba(10,0,16,0.09)';
+    for (var yy = sy; yy < sy + sh; yy += ls) x.fillRect(sx, yy, sw, ls * 0.4);
+    var hg = x.createLinearGradient(sx, sy, sx + sw * 0.6, sy + sh);
+    hg.addColorStop(0, 'rgba(255,255,255,0.16)'); hg.addColorStop(0.45, 'rgba(255,255,255,0.04)'); hg.addColorStop(0.46, 'rgba(255,255,255,0)');
+    x.fillStyle = hg; x.fillRect(sx, sy, sw, sh);
+    var vg = x.createRadialGradient(w / 2, h / 2, Math.min(sw, sh) * 0.35, w / 2, h / 2, Math.max(sw, sh) * 0.75);
+    vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,0.45)');
+    x.fillStyle = vg; x.fillRect(sx, sy, sw, sh);
+    x.restore();
+  });
+  return (camCache[key] = { bg: bgL, ov: ovL, m: m, sx: sx, sy: sy, sw: sw, sh: sh, sr: sr });
+}
+// Draws the jumbotron centred on the current origin of context x.
+function paintCam(x, w, h, im, pulse, age, res) {
+  var L = camLayers(w, h, res), ox = -w / 2, oy = -h / 2;
+  x.drawImage(L.bg, ox - L.m, oy - L.m, w + L.m * 2, h + L.m * 2);
+  x.save();
+  rr(x, ox + L.sx, oy + L.sy, L.sw, L.sh, L.sr); x.clip();
+  if (im) {
+    var ih = L.sh * (0.98 + 0.035 * pulse), iw = ih * im.naturalWidth / im.naturalHeight;
+    x.drawImage(im, -iw / 2, oy + L.sy + L.sh * 1.05 - ih, iw, ih);
+  }
+  if (age < 0.18) { x.fillStyle = 'rgba(255,240,250,' + ((1 - age / 0.18) * 0.85).toFixed(3) + ')'; x.fillRect(ox, oy, w, h); }
+  x.restore();
+  x.drawImage(L.ov, ox - L.m, oy - L.m, w + L.m * 2, h + L.m * 2);
+  var fs = h * 0.105;
+  x.font = fs + 'px Bungee';
+  var lw = x.measureText('FAN CAM').width + fs * 1.1, lh = fs * 1.55, lx = ox + w * 0.07, ly = oy - lh * 0.45;
+  x.fillStyle = '#d9870b'; rr(x, lx, ly + fs * 0.18, lw, lh, lh / 2); x.fill();
+  x.fillStyle = '#ffc23d'; rr(x, lx, ly, lw, lh, lh / 2); x.fill();
+  x.fillStyle = '#2a0a2f'; x.textAlign = 'left'; x.textBaseline = 'middle';
+  x.fillText('FAN CAM', lx + fs * 0.55, ly + lh * 0.54);
+  var fs2 = h * 0.07, rx = ox + w - w * 0.075, ry = oy + h * 0.14;
+  x.font = '800 ' + fs2 + 'px Outfit'; x.textAlign = 'right';
+  x.fillStyle = '#fff3e6'; x.fillText('LIVE', rx, ry);
+  var dw = x.measureText('LIVE').width;
+  x.fillStyle = Math.floor(age * 2) % 2 === 0 ? '#ff3b3b' : 'rgba(255,59,59,0.35)';
+  x.beginPath(); x.arc(rx - dw - fs2 * 0.6, ry, fs2 * 0.32, 0, TAU); x.fill();
+}
+function fanCam(mode, t0, dur) {
+  if (!SELFIE) return;
+  if (mode === 'combo' && G.cam && G.t < G.cam.until + 0.3) return;
+  G.cam = { mode: mode, t0: t0, until: t0 + dur };
+}
+function camOn(t) { return !!(SELFIE && G.cam && t >= G.cam.t0 && t < G.cam.until); }
+function drawFanCam(t, beatPos, pulse) {
+  var cm = G.cam;
+  if (!cm || !SELFIE || t < cm.t0 || t > cm.until + 0.3) return;
+  var b = Math.floor(beatPos), key;
+  if (cm.mode === 'solo') key = b % 2 ? 'sing' : 'happy';
+  else if (cm.mode === 'final') key = 'happy';
+  else key = Math.floor(b / 2) % 2 ? 'neutral' : 'happy';
+  var im = selfieReady(SELFIE[key]) ? SELFIE[key] : (selfieReady(SELFIE.neutral) ? SELFIE.neutral : null);
+  if (!im) return;
+  var age = t - cm.t0, out = clamp((t - cm.until) / 0.3, 0, 1);
+  var sc = (reduceMotion ? 1 : easeOutBack(clamp(age / 0.32, 0, 1))) * (1 - 0.12 * out);
+  var h = LED.h * 1.3, w = h * 1.3;
+  g.save();
+  g.globalAlpha = (reduceMotion ? clamp(age / 0.2, 0, 1) : 1) * (1 - out);
+  g.translate(VW / 2, LED.y + LED.h / 2);
+  g.rotate(-0.03 + 0.012 * Math.sin(t * 1.7));
+  g.scale(Math.max(0.01, sc), Math.max(0.01, sc));
+  paintCam(g, w, h, im, pulse, age, DPR);
+  g.restore();
+}
+
+/* ---------- share card (1080 × 1350, Instagram portrait) */
+function starPath(x, cx, cy, R, r) {
+  x.beginPath();
+  for (var i = 0; i < 10; i++) { var a = -Math.PI / 2 + i * Math.PI / 5, d = i % 2 ? r : R; x.lineTo(cx + Math.cos(a) * d, cy + Math.sin(a) * d); }
+  x.closePath();
+}
+function spaced(x, txt, cx, y, sp) {
+  var w = 0, i;
+  for (i = 0; i < txt.length; i++) w += x.measureText(txt[i]).width + (i ? sp : 0);
+  var px = cx - w / 2;
+  x.textAlign = 'left';
+  for (i = 0; i < txt.length; i++) { x.fillText(txt[i], px, y); px += x.measureText(txt[i]).width + sp; }
+}
+function renderCard(run) {
+  var W = 1080, H = 1350, c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  var x = c.getContext('2d');
+  var lg = x.createLinearGradient(0, 0, 0, H);
+  lg.addColorStop(0, '#2a0836'); lg.addColorStop(0.55, '#170520'); lg.addColorStop(1, '#0c0213');
+  x.fillStyle = lg; x.fillRect(0, 0, W, H);
+  // stage light
+  x.globalCompositeOperation = 'lighter';
+  var glow = function (spr, cx, cy, r, a) { x.globalAlpha = a; x.drawImage(spr.c, cx - r, cy - r, r * 2, r * 2); };
+  glow(SPR.glowViolet, 120, 330, 560, 0.55); glow(SPR.glowPink, 520, 760, 640, 0.6); glow(SPR.glowGold, 980, 200, 400, 0.3);
+  [[110, -0.42, SPR.cone.pink], [970, 0.42, SPR.cone.gold], [540, 0.06, SPR.cone.violet]].forEach(function (L) {
+    var k = 1050 / L[2].h;
+    x.save(); x.translate(L[0], -30); x.rotate(L[1]); x.globalAlpha = 0.55;
+    x.drawImage(L[2].c, -L[2].w * k / 2, 0, L[2].w * k, L[2].h * k); x.restore();
+  });
+  x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
+  // stage floor + footlights
+  var FLOOR = 900;
+  var fg = x.createLinearGradient(0, FLOOR, 0, H);
+  fg.addColorStop(0, '#3a0d48'); fg.addColorStop(0.08, '#1d0628'); fg.addColorStop(1, '#0a0210');
+  x.fillStyle = fg; x.fillRect(0, FLOOR, W, H - FLOOR);
+  x.fillStyle = '#ff4fa3'; x.fillRect(0, FLOOR, W, 4);
+  x.globalCompositeOperation = 'lighter';
+  for (var i = 0; i < 13; i++) {
+    var lx = (i + 0.5) * W / 13;
+    x.globalAlpha = i % 2 ? 0.55 : 0.9;
+    x.drawImage((i % 2 ? SPR.glowGold : SPR.glowPink).c, lx - 34, FLOOR + 12 - 34, 68, 68);
+  }
+  x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
+  // logo
+  x.textBaseline = 'alphabetic'; x.textAlign = 'center';
+  x.save(); x.translate(520, 190); x.rotate(-0.052);
+  x.font = '168px Shrikhand';
+  x.fillStyle = 'rgba(0,0,0,0.35)'; x.fillText('Funky Cat', 14, 20);
+  x.fillStyle = '#6b1550'; x.fillText('Funky Cat', 11, 11);
+  x.fillStyle = '#ffc23d'; x.fillText('Funky Cat', 7, 7); x.fillText('Funky Cat', 3.5, 3.5);
+  x.fillStyle = '#ff4fa3'; x.fillText('Funky Cat', 0, 0);
+  x.restore();
+  x.save(); x.translate(735, 282); x.rotate(-0.1);
+  x.font = '76px Shrikhand';
+  x.fillStyle = '#6b1550'; x.fillText('na różowo', 4, 4);
+  x.fillStyle = '#ffc23d'; x.fillText('na różowo', 0, 0);
+  x.restore();
+  // the cat (re-uses the in-game drawing; globals are swapped for a moment)
+  var withCam = !!(SELFIE && selfieReady(SELFIE.happy));
+  var keepG = g, keepH = CAT_H, keepCat = {}, k2;
+  for (k2 in cat) keepCat[k2] = cat[k2];
+  try {
+    g = x; CAT_H = withCam ? 370 : 420;
+    cat.lean = 0; cat.squash = 0; cat.dizzy = 0; cat.flash = 0; cat.ear = 0; cat.nod = 0; cat.vx = 0;
+    cat.raise = run.stars >= 2 ? 1 : 0.35;
+    drawCat(withCam ? 320 : 520, FLOOR - 6, 1.3, 0.4, true);
+  } finally {
+    g = keepG; CAT_H = keepH;
+    for (k2 in keepCat) cat[k2] = keepCat[k2];
+  }
+  // the player on the jumbotron
+  if (withCam) {
+    x.save(); x.translate(770, 520); x.rotate(-0.045);
+    paintCam(x, 450, 346, SELFIE.happy, 0.4, 1, 1);
+    x.restore();
+    x.save(); x.translate(800, 790); x.rotate(-0.08);
+    x.font = '58px Shrikhand'; x.textAlign = 'center';
+    x.fillStyle = '#6b1550'; x.fillText('to ja!', 3, 3);
+    x.fillStyle = '#ffd3e8'; x.fillText('to ja!', 0, 0);
+    x.restore();
+  }
+  // result
+  var st = STAGES[run.stage];
+  x.font = '800 30px Outfit'; x.fillStyle = '#cdb0da';
+  spaced(x, ('Etap ' + (run.stage + 1) + ' · ' + st.name).toUpperCase(), 540, 966, 5);
+  for (var s = 0; s < 3; s++) {
+    var on = s < run.stars, scx = 540 + (s - 1) * 112;
+    starPath(x, scx, 1030, 48, 21);
+    if (on) { x.save(); x.shadowColor = 'rgba(255,194,61,0.8)'; x.shadowBlur = 28; x.fillStyle = '#ffc23d'; x.fill(); x.restore(); x.lineWidth = 4; x.strokeStyle = '#d9870b'; x.stroke(); }
+    else { x.fillStyle = 'rgba(255,211,232,0.14)'; x.fill(); }
+  }
+  var sc = fmt(run.s);
+  x.font = '120px Bungee';
+  var sw = x.measureText(sc).width;
+  x.font = '800 40px Outfit';
+  var pw = x.measureText(' pkt').width, sx0 = 540 - (sw + pw) / 2;
+  x.textAlign = 'left';
+  x.font = '120px Bungee';
+  x.fillStyle = '#6b1550'; x.fillText(sc, sx0 + 6, 1170);
+  x.fillStyle = '#ffc23d'; x.fillText(sc, sx0, 1164);
+  x.font = '800 40px Outfit'; x.fillStyle = '#ffd3e8'; x.fillText(' pkt', sx0 + sw, 1164);
+  x.textAlign = 'center'; x.font = '600 30px Outfit'; x.fillStyle = '#ff9ccd';
+  x.fillText(GRADE_NAMES[run.stars].replace(/\..*$/, '') + '  ·  combo ' + run.combo + '  ·  złote nuty ' + Math.round(run.gold * 100 / Math.max(1, run.goldTotal)) + '%', 540, 1216);
+  // footer
+  x.fillStyle = 'rgba(255,79,163,0.16)'; x.fillRect(0, 1248, W, H - 1248);
+  x.fillStyle = 'rgba(255,79,163,0.7)'; x.fillRect(0, 1248, W, 3);
+  x.textAlign = 'left';
+  x.font = '800 31px Outfit'; x.fillStyle = '#fff3e6'; x.fillText('Muzyka: Marcin Nowakowski · „Na różowo”', 56, 1294);
+  x.font = '600 29px Outfit'; x.fillStyle = '#ffc23d'; x.fillText('Zagraj: mn74-pixel.github.io/Funky-Cat', 56, 1332);
+  x.textAlign = 'right'; x.font = '50px Shrikhand';
+  x.fillStyle = '#6b1550'; x.fillText('Pobijesz?', 1027, 1319);
+  x.fillStyle = '#ff4fa3'; x.fillText('Pobijesz?', 1024, 1316);
+  x.textAlign = 'left'; x.font = '600 26px Outfit'; x.fillStyle = 'rgba(255,211,232,0.72)'; x.fillText('nowakowski.net.pl', 56, 58);
+  return c;
+}
+function shareText() {
+  var r = lastRun || { s: 0, stage: 0 };
+  return 'Mam ' + fmt(r.s) + ' pkt w etapie ' + (r.stage + 1) + ' gry Funky Cat na różowo, do muzyki Marcina Nowakowskiego. Pobijesz? ' + GAME_URL;
+}
+var cardBlob = null, cardUrl = null, cardFile = null;
+function openCard() {
+  if (!lastRun) return;
+  show('shareCard', true);
+  $('shareCard').scrollTop = 0;
+  $('cardWait').hidden = false; $('cardImg').hidden = true; $('cardMsg').textContent = '';
+  $('cardShare').hidden = true;
+  syncSelfieUI(); probeSelfie();
+  setTimeout(function () {
+    var cvs;
+    try { cvs = renderCard(lastRun); } catch (e) { $('cardWait').textContent = 'Nie udało się narysować karty.'; return; }
+    var img = $('cardImg');
+    var done = function (blob) {
+      if (cardUrl) { try { URL.revokeObjectURL(cardUrl); } catch (e) {} }
+      cardBlob = blob; cardUrl = null; cardFile = null;
+      if (blob) {
+        try { cardUrl = URL.createObjectURL(blob); } catch (e) {}
+        try { cardFile = new File([blob], 'funky-cat-wynik.png', { type: 'image/png' }); } catch (e) {}
+      }
+      var data = null;
+      img.onerror = function () { img.onerror = null; data = data || cvs.toDataURL('image/png'); img.src = data; $('cardSave').href = data; };
+      img.src = cardUrl || (data = cvs.toDataURL('image/png'));
+      $('cardSave').href = cardUrl || data;
+      img.hidden = false; $('cardWait').hidden = true;
+      var top = false;
+      try { top = window.top === window; } catch (e) {}
+      var canFiles = false;
+      try { canFiles = !!(top && cardFile && navigator.canShare && navigator.canShare({ files: [cardFile] })); } catch (e) {}
+      $('cardShare').hidden = !canFiles;
+      $('cardSave').className = canFiles ? 'btn' : 'btn btn-primary';
+    };
+    if (cvs.toBlob) cvs.toBlob(done, 'image/png'); else done(null);
+  }, 40);
+}
+function closeCard() { show('shareCard', false); try { $('shareBtn').focus({ preventScroll: true }); } catch (e) {} }
+$('cardClose').addEventListener('click', closeCard);
+$('cardShare').addEventListener('click', function () {
+  if (!cardFile) return;
+  navigator.share({ files: [cardFile], title: 'Funky Cat na różowo', text: shareText() }).catch(function (e) {
+    if (e && e.name === 'AbortError') return;
+    $('cardMsg').textContent = 'Nie udało się otworzyć udostępniania. Zapisz obrazek i wyślij go ręcznie.';
+  });
+});
+$('cardCopy').addEventListener('click', function () {
+  var txt = shareText(), msg = $('cardMsg');
+  try { navigator.clipboard.writeText(txt).then(function () { msg.textContent = 'Skopiowane. Wklej znajomym razem z obrazkiem.'; }, function () { msg.textContent = txt; }); }
+  catch (e) { msg.textContent = txt; }
+});
+$('shareBtn').addEventListener('click', openCard);
 $('pauseBtn').addEventListener('click', pauseGame);
 $('resumeBtn').addEventListener('click', resumeGame);
 $('restartBtn').addEventListener('click', function () { show('pause', false); startStage(STAGE); });
@@ -2395,6 +2832,7 @@ function frame(nowMs) {
   }
   ledDim = (G.mode === 'play' && !G.solo) || G.mode === 'title';
   drawLED(ledMode, ledKey, now * 9, pulse, specCols, tint);
+  if (G.mode !== 'title') drawFanCam(t, beatPos, pulse);
 
   var intensity = G.mode === 'title' ? 0.55 : clamp(0.35 + bass * 0.6 + (G.solo ? 0.3 : 0), 0, 1.2);
   drawLamps(t, beatPos, intensity, G.solo);
@@ -2411,7 +2849,7 @@ function frame(nowMs) {
   if (G.mode !== 'title') drawNotes(t, beatPos); else demoDraw(now);
   drawCat(PX + cat.x * PW, Y_FEET, now, beatFrac, playing);
   drawFX();
-  var hands = G.mode === 'title' ? 0.15 : clamp((G.combo - 6) / 40, 0, 0.75) + (G.solo ? 0.5 : 0) + G.cheer;
+  var hands = G.mode === 'title' ? 0.15 : clamp((G.combo - 6) / 40, 0, 0.75) + (G.solo ? 0.5 : 0) + G.cheer + (G.mode !== 'title' && camOn(t) ? 0.4 : 0);
   drawCrowd(beatPos, G.mode === 'title' ? 0.5 : clamp(energy * 2.2, 0.2, 1), hands, intensity);
   if (G.mode === 'play' || G.mode === 'paused') {
     drawTitleCard(t);
@@ -2497,6 +2935,9 @@ function botStep(t, dt) {
 window.__fc = {
   G: G, cat: cat, BANNERS: BANNERS, notes: function () { return NOTES; },
   bot: function (v) { G.bot = !!v; },
+  cam: function (m, d) { fanCam(m || 'combo', G.t, d || 4); },
+  finish: function () { endRound(); },
+  card: function (r) { return renderCard(r).toDataURL('image/jpeg', 0.85); },
   start: function (i) { startStage(i || 0); },
   stage: function () { return STAGE; },
   stats: function () { return { t: G.t, score: G.score, gold: G.gold, goldTotal: GOLD_TOTAL, drops: G.drops, dropTotal: DROP_TOTAL, bad: G.bad, badTotal: BAD_TOTAL, rain: G.rain, rainTotal: RAIN_TOTAL, perfect: G.perfect, maxCombo: G.maxCombo, mode: G.mode, fps: perfN / Math.max(perfAcc, 1e-3), decDelay: decDelay, audioReady: audioReady, bonus: G.bonus, bonusTotal: BONUS_TOTAL, stage: STAGE }; },
