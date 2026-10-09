@@ -2479,6 +2479,7 @@ function openCard() {
       var canFiles = false;
       try { canFiles = !!(top && cardFile && navigator.canShare && navigator.canShare({ files: [cardFile] })); } catch (e) {}
       $('cardShare').hidden = !canFiles;
+      $('cardSave').hidden = !top;  // embedded previews cannot download files; long-press still works
       $('cardSave').className = canFiles ? 'btn' : 'btn btn-primary';
     };
     if (cvs.toBlob) cvs.toBlob(done, 'image/png'); else done(null);
