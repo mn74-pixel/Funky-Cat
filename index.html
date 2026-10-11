@@ -127,7 +127,7 @@ input{-webkit-user-select:auto;user-select:auto}
 .menu-btn .dot{position:absolute;top:8px;right:14px;width:9px;height:9px;border-radius:50%;background:var(--pink);box-shadow:0 0 8px var(--pink)}
 
 /* selfie / fan cam */
-.menu-row{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:min(100%,400px)}
+
 .menu-btn{font-size:12.5px}
 .menu-btn .dot{right:10px}
 .cam{position:relative;align-self:center;width:min(78vw,300px);aspect-ratio:1.3;border-radius:22px;padding:9px;background:linear-gradient(160deg,#ff6bb5,#d61f7d);box-shadow:0 0 0 3px rgba(255,79,163,.25),0 0 40px rgba(255,45,143,.45);box-sizing:border-box}
@@ -278,7 +278,6 @@ input[type=range]{width:100%;accent-color:var(--pink);height:32px}
     <nav class="menu-row" aria-label="Menu">
       <button class="menu-btn" type="button" data-open="ranking"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V12M12 20V5M19 20v-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>Ranking</button>
       <button class="menu-btn" type="button" data-open="badges"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M8.5 13.5 7 21l5-2.6 5 2.6-1.5-7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></svg>Odznaki<span class="dot" id="badgeDot" hidden></span></button>
-      <button class="menu-btn" type="button" data-open="selfie"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6.5" width="19" height="13" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M8.5 6.5 10 4h4l1.5 2.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Selfie<span class="dot" id="selfieDot" hidden></span></button>
       <button class="menu-btn" type="button" data-open="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="7" r="2.4" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="10" cy="17" r="2.4" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>Ustawienia</button>
     </nav>
   </section>
@@ -1487,6 +1486,7 @@ function clap(t0, vol) {
 }
 function sfxCatch(n, perfect) {
   if (!AC || !sfxOn) return;
+  if (n.k === K_GOLD && n.a !== 2) return;  // plain gold notes stay silent: the song leads
   var w = noteTime(n);
   clap(w, n.a ? 0.75 : 0.6);
   if (n.a) thump(w, 0.32);
@@ -1500,7 +1500,7 @@ function sfxBonus(n) {
 }
 function sfxDrop(n) {
   if (!AC || !sfxOn) return;
-  noiseHit(noteTime(n), 'highpass', 9000, 0.7, 0.22, 0.03);
+  return;  // droplets are silent too
 }
 function sfxRain(n) {
   if (!AC || !sfxOn) return;
@@ -2143,12 +2143,14 @@ function selfieFromUrls(u) {
   });
   return o;
 }
-SELFIE = selfieFromUrls(store.get('selfie', null));
+SELFIE = null;  // selfie feature switched off (kept as code for a possible return)
+selfieOff = true;
 function saveSelfie(u) { try { localStorage.setItem('fcNR_selfie', JSON.stringify(u)); return true; } catch (e) { return false; } }
 function dropSelfie() { try { localStorage.removeItem('fcNR_selfie'); } catch (e) {} SELFIE = null; }
 
 // The face kit (MediaPipe, ~30 MB) only exists next to the full game, not inside previews.
 function probeSelfie() {
+  if (!selfieProbe) selfieProbe = Promise.resolve(false);
   if (selfieProbe) return selfieProbe;
   var p;
   try { p = fetch('face/selfie.js', { method: 'HEAD', cache: 'no-store' }).then(function (r) { return r.ok; }); }
@@ -2183,7 +2185,7 @@ function syncSelfieUI() {
   $('cardSelfie').hidden = selfieOff;
   $('resCamAdd').disabled = selfieBusy;
   $('resCamHint').hidden = has || selfieOff;
-  $('selfieDot').hidden = has || !!store.get('selfieSeen', 0);
+  if ($('selfieDot')) $('selfieDot').hidden = has || !!store.get('selfieSeen', 0);
 }
 setInterval(function () {
   if (!SELFIE || $('selfie').hidden || selfieBusy) return;
