@@ -1840,6 +1840,7 @@ gameEl.addEventListener('pointerdown', function (e) {
   if (G.mode !== 'play') return;
   if (e.target.closest && e.target.closest('button,a,input,.ov')) return;
   if (e.pointerType === 'mouse') { cat.tx = playfieldX(e.clientX); return; }
+  if (inp.id !== null) return; // Keep the finger that started the drag in control.
   inp.id = e.pointerId; inp.lastX = e.clientX;
   try { gameEl.setPointerCapture(e.pointerId); } catch (err) {}
   e.preventDefault();
@@ -1857,6 +1858,7 @@ gameEl.addEventListener('pointermove', function (e) {
 function endPointer(e) { if (e.pointerId === inp.id) inp.id = null; }
 gameEl.addEventListener('pointerup', endPointer);
 gameEl.addEventListener('pointercancel', endPointer);
+gameEl.addEventListener('lostpointercapture', endPointer);
 window.addEventListener('keydown', function (e) {
   var k = e.key;
   if (G.mode === 'play') {
@@ -1871,7 +1873,8 @@ window.addEventListener('keydown', function (e) {
     if (!playBtn.disabled) { playBtn.click(); e.preventDefault(); }
   }
 });
-window.addEventListener('blur', function () { inp.left = false; inp.right = false; inp.id = null; });
+// A transient focus change on iOS must not cancel an ongoing touch drag.
+window.addEventListener('blur', function () { inp.left = false; inp.right = false; });
 window.addEventListener('keyup', function (e) {
   var k = e.key;
   if (k === 'ArrowLeft' || k === 'a' || k === 'A') inp.left = false;
@@ -1977,6 +1980,7 @@ function pauseGame(reason) {
   if (G.mode !== 'play') return;
   $('pauseReason').textContent = reason === 'background' ? 'Gra zatrzymała się po przejściu do innej aplikacji lub karty.' : (reason === 'orientation' ? 'Obróć telefon do pionu, aby kontynuować.' : 'Odpocznij chwilę — Twój wynik czeka.');
   G.mode = 'paused';
+  inp.id = null; inp.left = false; inp.right = false;
   if (AC && AC.state === 'running') AC.suspend();
   show('pause', true);
   $('pauseBtn').hidden = true;
@@ -3177,7 +3181,7 @@ function frame(nowMs) {
     if (inp.right) cat.tx = clamp(cat.tx + 1.7 * dt, X_MIN, X_MAX);
     if (G.bot) botStep(t, dt);
     var px0 = cat.x;
-    cat.x += (cat.tx - cat.x) * (1 - Math.exp(-dt * 30));
+    cat.x += (cat.tx - cat.x) * (1 - Math.exp(-dt * 48));
     cat.vx = (cat.x - px0) / Math.max(dt, 1e-3);
     judge(t, rawDt);
     timeline(t);
