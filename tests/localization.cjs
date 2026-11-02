@@ -30,6 +30,9 @@ const assert = require('node:assert/strict');
     await page.locator('#playBtn').click();
     await page.waitForFunction(()=>window.__fc.G.mode==='play',null,{timeout:30000});
     await page.locator('#pauseBtn').click();
+    const frozenTime = await page.evaluate(() => { const t=window.__fc.G.t; window.__fc.G.t=40; return t; });
+    await page.waitForTimeout(250); // render the chorus wash behind the paused overlay
+    await page.evaluate(t => { window.__fc.G.t=t; }, frozenTime);
     await page.locator('#resumeBtn').click();
     await page.waitForFunction(()=>window.__fc.G.mode==='play');
     await page.evaluate(()=>window.__fc.finish());
