@@ -863,6 +863,20 @@ function buildBackground() {
     var gr = c.createLinearGradient(0, 0, 0, VH);
     gr.addColorStop(0, '#0a0312'); gr.addColorStop(0.32, '#1a0624'); gr.addColorStop(0.68, '#290a33'); gr.addColorStop(1, '#13041a');
     c.fillStyle = gr; c.fillRect(0, 0, VW, VH);
+    // A layered theatre proscenium frames the performance without obscuring notes.
+    var halo=c.createRadialGradient(VW*.5,VH*.40,0,VW*.5,VH*.4,Math.max(VW,VH)*.60);
+    halo.addColorStop(0,'rgba(145,37,104,.24)');halo.addColorStop(.55,'rgba(42,18,75,.08)');halo.addColorStop(1,'rgba(5,1,15,.35)');
+    c.fillStyle=halo;c.fillRect(0,0,VW,VH);
+    var archW=Math.min(VW*.92,840), archX=(VW-archW)/2, archY=SAFE_T+50, archH=Math.max(160,Y_FEET-archY);
+    c.save();rr(c,archX,archY,archW,archH,Math.min(archW*.28,150));
+    c.fillStyle='rgba(255,125,188,.025)';c.fill();c.lineWidth=1.5;c.strokeStyle='rgba(255,180,212,.13)';c.stroke();
+    rr(c,archX+8,archY+8,archW-16,archH-16,Math.min(archW*.26,140));c.strokeStyle='rgba(255,190,110,.11)';c.stroke();
+    for(var ai=0;ai<13;ai++){
+      var ax=archX+archW*(ai+.5)/13;
+      c.fillStyle=ai%2?'rgba(255,116,174,.32)':'rgba(255,207,124,.34)';
+      c.beginPath();c.arc(ax,archY+15,1.4,0,TAU);c.fill();
+    }
+    c.restore();
     // back wall panels
     var top = SAFE_T + 40, bot = Y_FEET;
     for (var x = (VW / 2) % 44 - 44; x < VW + 44; x += 44) {
@@ -877,6 +891,19 @@ function buildBackground() {
     c.fillStyle = 'rgba(255,150,210,0.075)';
     for (var row = 0; row < LED.rows; row++) for (var col = 0; col < LED.cols; col++) {
       c.beginPath(); c.arc(LED.x + (col + 0.5) * p, LED.y + (row + 0.5) * p, p * 0.24, 0, TAU); c.fill();
+    }
+    // Vintage speaker towers sit outside the playfield on wide screens.
+    if(VW>760){
+      [Math.max(18,PX-116),Math.min(VW-92,PX+PW+40)].forEach(function(sx){
+        var sy=Y_FEET-150, sw=72, sh=154;
+        var face=c.createLinearGradient(sx,sy,sx+sw,sy+sh);face.addColorStop(0,'#342139');face.addColorStop(1,'#110d1b');
+        rr(c,sx,sy,sw,sh,12);c.fillStyle=face;c.fill();c.strokeStyle='rgba(255,207,172,.20)';c.lineWidth=1.5;c.stroke();
+        [sy+43,sy+108].forEach(function(cy,idx){
+          var radius=idx?25:19;c.beginPath();c.arc(sx+sw/2,cy,radius,0,TAU);c.fillStyle='#100c19';c.fill();
+          c.lineWidth=2;c.strokeStyle='#63445e';c.stroke();c.beginPath();c.arc(sx+sw/2,cy,radius*.61,0,TAU);c.fillStyle='#29172c';c.fill();
+          c.beginPath();c.arc(sx+sw/2,cy,radius*.25,0,TAU);c.fillStyle='#130e1b';c.fill();
+        });
+      });
     }
     // truss
     var ty = SAFE_T + 22;
@@ -2954,6 +2981,13 @@ function drawHeroScene(now, pulse) {
   var glow = g.createRadialGradient(x,y,0,x,y,r*1.7);
   glow.addColorStop(0,'rgba(255,70,155,.14)'); glow.addColorStop(1,'rgba(255,70,155,0)');
   g.fillStyle=glow; g.fillRect(x-r*1.7,y-r*1.7,r*3.4,r*3.4);
+  // Vinyl grooves add depth to the hero while retaining the original mascot.
+  g.save();g.globalAlpha=.82;
+  var disk=g.createRadialGradient(x-r*.2,y-r*.25,0,x,y,r*.82);
+  disk.addColorStop(0,'#503044');disk.addColorStop(.35,'#271828');disk.addColorStop(.7,'#18121f');disk.addColorStop(1,'#0c0911');
+  g.fillStyle=disk;g.beginPath();g.arc(x,y,r*.83,0,TAU);g.fill();
+  for(var vg=0;vg<7;vg++){g.beginPath();g.arc(x,y,r*(.35+vg*.065),0,TAU);g.strokeStyle='rgba(255,200,213,'+(vg%2?.07:.12)+')';g.lineWidth=1;g.stroke();}
+  g.restore();
   for(var j=0;j<3;j++) {
     g.strokeStyle=j===1?'rgba(255,193,99,.24)':'rgba(255,122,182,.15)';g.lineWidth=j===1?2:1;
     g.beginPath();g.arc(x,y,r*(.86+j*.17),0,TAU);g.stroke();
@@ -2975,6 +3009,11 @@ function drawCatchStage(t,pulse) {
   g.strokeStyle=grd;g.lineWidth=2;g.beginPath();g.moveTo(PX,Y_CATCH);g.lineTo(PX+PW,Y_CATCH);g.stroke();
   g.globalAlpha=.1;g.fillStyle=grd;g.fillRect(PX,Y_CATCH,PW,30);
   g.globalAlpha=1;var cx=PX+cat.x*PW;
+  // The player gets an immediate, musical response on a successful catch.
+  if(cat.flash>.02){
+    var wave=1-cat.flash;g.strokeStyle='rgba(255,223,157,'+(cat.flash*.65)+')';g.lineWidth=2;
+    g.beginPath();g.ellipse(cx,Y_CATCH,CATCH_HW*PW*(1+wave),7+wave*13,0,0,TAU);g.stroke();
+  }
   g.strokeStyle=G.solo?C.pink:C.gold;g.lineWidth=2;g.beginPath();g.ellipse(cx,Y_CATCH,CATCH_HW*PW,7,0,0,TAU);g.stroke();
   g.restore();
 }
