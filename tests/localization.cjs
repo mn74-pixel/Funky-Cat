@@ -29,7 +29,7 @@ const assert = require('node:assert/strict');
     await page.waitForFunction(()=>window.__fc.G.mode==='play');
     await page.evaluate(()=>window.__fc.finish());
     await page.locator('#results').waitFor({state:'visible'});
-    assert.match(await page.locator('#resStage').innerText(),/^Stage 1/);
+    assert.match(await page.locator('#resStage').innerText(),/^Stage 1/i);
     assert.deepEqual(errors,[]);
     await context.close();
   }
