@@ -23,7 +23,6 @@ const assert = require('node:assert/strict');
     await page.goto('http://127.0.0.1:8765/',{waitUntil:'domcontentloaded'});
     await page.waitForFunction(()=>window.__fc && window.__fc.stats().audioReady,null,{timeout:60000});
     await page.locator('#playBtn').click();
-    await page.locator('#stageBtn0').click();
     await page.waitForFunction(()=>window.__fc.G.mode==='play',null,{timeout:30000});
     await page.locator('#pauseBtn').click();
     await page.locator('#resumeBtn').click();
