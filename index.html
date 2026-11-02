@@ -1853,6 +1853,39 @@ function finale(n, t) {
   sfxFinal(n);
 }
 
+// In the absence of a measured chorus-end marker, use eight bars and return
+// before the existing solo marker. A future measured chorusEnd overrides this.
+function chorusLighting(t, meta, beat) {
+  var start = meta.chorusStart;
+  if (!Number.isFinite(start) || !Number.isFinite(t) || !Number.isFinite(beat) || beat <= 0) return { strength: 0, accent: 0 };
+  var end = Number.isFinite(meta.chorusEnd) && meta.chorusEnd > start ? meta.chorusEnd : start + 32 * beat;
+  if (Number.isFinite(meta.soloStart) && meta.soloStart > start) end = Math.min(end, meta.soloStart);
+  var fadeIn = clamp((t - start) / 0.85, 0, 1);
+  var fadeOut = clamp((end - t) / 1.25, 0, 1);
+  var fade = Math.min(fadeIn, fadeOut);
+  fade = fade * fade * (3 - 2 * fade);
+  var age = t - start;
+  return { strength: fade, accent: !reduceMotion && age >= 0 && age < 0.65 ? Math.pow(1 - age / 0.65, 3) : 0 };
+}
+function drawChorusLighting(t) {
+  var light = chorusLighting(t, META, BEAT);
+  if (light.strength <= 0 && light.accent <= 0) return;
+  g.save();
+  // Scene-only wash, drawn behind notes and controls for legibility.
+  var wash = g.createLinearGradient(0, 0, VW, VH);
+  wash.addColorStop(0, 'rgba(68,110,255,' + (light.strength * 0.25) + ')');
+  wash.addColorStop(0.52, 'rgba(187,48,210,' + (light.strength * 0.18) + ')');
+  wash.addColorStop(1, 'rgba(255,98,151,' + (light.strength * 0.12) + ')');
+  g.fillStyle = wash; g.fillRect(0, 0, VW, VH);
+  if (light.accent > 0) {
+    var glow = g.createRadialGradient(VW * 0.5, SAFE_T + 18, 0, VW * 0.5, SAFE_T + 18, Math.max(VW, VH) * 0.75);
+    glow.addColorStop(0, 'rgba(255,215,160,' + (light.accent * 0.28) + ')');
+    glow.addColorStop(1, 'rgba(255,150,180,0)');
+    g.fillStyle = glow; g.fillRect(0, 0, VW, VH);
+  }
+  g.restore();
+}
+
 function timeline(t) {
   var F = G.fired;
   if (!F.title && t >= 0.05) { F.title = 1; }
@@ -3276,6 +3309,7 @@ function frame(nowMs) {
   var sh = G.shake > 0 ? G.shake * G.shake * 7 : 0;
   if (sh) g.translate(rnd(-sh, sh), rnd(-sh, sh));
   g.drawImage(bg.c, 0, 0, VW, VH);
+  if (G.mode === 'play' || G.mode === 'paused') drawChorusLighting(t);
 
   // LED wall
   var ledMode = 'spec', ledKey = null, tint = null;
