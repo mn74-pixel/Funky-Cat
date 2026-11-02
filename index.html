@@ -2395,7 +2395,7 @@ $('selfieFile').addEventListener('change', function () {
   this.value = '';
   if (!f || selfieBusy) return;
   selfieBusy = true; syncSelfieUI();
-  selfieMsg('Uruchamiam rozpoznawanie twarzy…');
+  selfieMsg(window.fcLanguage === 'en' ? 'Starting face recognition…' : 'Uruchamiam rozpoznawanie twarzy…');
   loadSelfieModule().then(function (m) {
     return m.makeSelfie(f, function (s) { selfieMsg(s); });
   }, function () {
@@ -2681,7 +2681,7 @@ $('cardShare').addEventListener('click', function () {
 });
 $('cardCopy').addEventListener('click', function () {
   var txt = shareText(), msg = $('cardMsg');
-  try { navigator.clipboard.writeText(txt).then(function () { msg.textContent = 'Skopiowane. Wklej znajomym razem z obrazkiem.'; }, function () { msg.textContent = txt; }); }
+  try { navigator.clipboard.writeText(txt).then(function () { msg.textContent = window.fcLanguage === 'en' ? 'Copied. Paste it for your friends with the image.' : 'Skopiowane. Wklej znajomym razem z obrazkiem.'; }, function () { msg.textContent = txt; }); }
   catch (e) { msg.textContent = txt; }
 });
 $('shareBtn').addEventListener('click', openCard);

@@ -10,7 +10,7 @@ const assert = require('node:assert/strict');
     const lang = locale === 'pl-PL' ? 'pl' : 'en';
     assert.equal(await page.locator('html').getAttribute('lang'),lang);
     await page.locator('[data-open="settings"]').click();
-    assert.equal(await page.locator('#settings h3').nth(0).innerText(),lang==='pl'?'Język':'Language');
+    assert.equal(await page.locator('#settings h3').nth(0).textContent(),lang==='pl'?'Język':'Language');
     await page.locator('#languageSelect').selectOption(lang==='pl'?'en':'pl');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForFunction(expected => document.documentElement.lang === expected,lang==='pl'?'en':'pl');
