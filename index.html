@@ -297,6 +297,7 @@ input[type=range]{width:100%;accent-color:var(--pink);height:32px}
 .badge .bi{letter-spacing:-.03em}.res-stars span.on{filter:drop-shadow(0 3px 8px #ffcc5b66)}.stage:not(.locked) .play-ic{background:linear-gradient(145deg,#ffe8a5,#ffbd36);box-shadow:0 4px 0 #a96c22,0 8px 20px #ffc23d25}.rank.big li:first-child{border-color:#ffc23d70;background:linear-gradient(110deg,#64442d,#2b1b30)}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
+.lang-quick{position:absolute;top:max(10px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:5;border:1px solid #d692bf77;border-radius:999px;background:#24102bdd;color:#fff3e6;padding:9px 13px;font:700 12px Outfit,sans-serif;cursor:pointer}.lang-quick:focus-visible{outline:2px solid #ffc23d;outline-offset:3px}
 </style>
 </head>
 <body>
@@ -311,6 +312,7 @@ input[type=range]{width:100%;accent-color:var(--pink);height:32px}
   </button>
 
   <section id="start" class="ov" aria-label="Start">
+    <button id="languageQuick" class="lang-quick" type="button">🌐 PL / EN</button>
     <div class="start-head"><p class="eyebrow"><i></i> THE FUNKY CATS EXPERIENCE</p>
     <div class="logo" aria-label="Funky Cat na różowo">
       <span class="logo-top">Funky Cat</span>
@@ -546,6 +548,7 @@ input[type=range]{width:100%;accent-color:var(--pink);height:32px}
 (function(){
 'use strict';
 var dictionary = {"muzyka:":"music:","Złap rytm. Rozkręć scenę. Zagraj swój najlepszy set.":"Catch the rhythm. Light up the stage. Play your best set.","TWÓJ MOMENT NA SCENIE":"YOUR MOMENT ON STAGE","3 ETAPY · 9 ★":"3 STAGES · 9 ★","Przesuwaj kota":"Move the cat","palcem w lewo i w prawo":"left and right with your finger","Ruszaj kotem":"Move the cat","myszką albo strzałkami ← →":"with your mouse or arrow keys ← →","Łap złote nuty":"Catch golden notes","w rytm muzyki":"to the beat of the music","Duże nuty z gwiazdką":"Big notes with a star","to akcenty: punkty ×2":"are accents: points ×2","Omijaj fałsze":"Avoid wrong notes",", psują cały groove":", they spoil your groove","Ładuję muzykę…":"Loading music…","Odznaki":"Badges","Konkurs":"Contest","Ustawienia":"Settings","Słuchawki na uszy. Reszta przyjdzie z rytmem.":"Put on your headphones. Let the rhythm do the rest.","Gwiazdki dostajesz za złapane złote nuty: ★ 60%, ★★ 80%, ★★★ 95%. Jedna gwiazdka odblokowuje kolejny etap.":"Earn stars by catching golden notes: ★ 60%, ★★ 80%, ★★★ 95%. One star unlocks the next stage.","Kolejne utwory":"More songs","Nowe single Marcina pojawią się tu jako nowe poziomy.":"Marcin’s new singles will appear here as new levels.","Najlepsze wyniki na tym urządzeniu":"Best scores on this device","Nikogo tu jeszcze nie ma. Zagraj etap i zapisz wynik ze swoim nickiem.":"No scores yet. Play a stage and save your score with your nickname.","Wspólny ranking wieczoru na koncertach dojdzie w wersji koncertowej.":"A shared leaderboard for live shows will be available in the concert version.","Twoja twarz na telebimie nad sceną":"Your face on the big screen above the stage","Dodaj selfie, a gra wytnie z niego Twoją głowę. Pojawisz się na telebimie podczas bonusu i przy combo 50 i 100. Twoja twarz trafi też na kartę wyniku, którą wyślesz znajomym.":"Add a selfie and the game will cut out your face. You will appear on the big screen during a bonus and at combos of 50 and 100, as well as on your shareable scorecard.","Dodaj selfie":"Add selfie","Usuń selfie":"Remove selfie","Zmień selfie":"Change selfie","Zdjęcie zostaje na tym urządzeniu. Nic nie jest wysyłane do internetu. Za pierwszym razem gra pobiera ok. 30 MB narzędzi do rozpoznawania twarzy.":"Your photo stays on this device and is not uploaded. The first time, the game downloads about 30 MB of face recognition tools.","Graj o wejściówki na koncerty":"Play for concert tickets","Masz kod z koncertu?":"Have a code from a concert?","Dalej":"Continue","Akceptuję":"I accept the","regulamin konkursu":"contest rules","Chcę dostawać od Marcina Nowakowskiego e-maile o koncertach, biletach i wejściówkach (opcjonalnie).":"I want to receive emails from Marcin Nowakowski about concerts and tickets (optional).","Potwierdź e-mail: wyślemy 4-cyfrowy kod. Robisz to tylko raz na tym telefonie.":"Confirm your email: we will send you a 4-digit code. You only need to do this once on this phone.","Wyślij kod":"Send code","Graj w konkursie":"Play the contest","Sprawdź, czy wygrałem":"Check if I won","Inny konkurs":"Another contest","Wyniki konkursu liczy serwer na podstawie przebiegu gry. W rankingu widać tylko nick.":"The server calculates contest scores from gameplay. Only your nickname appears on the leaderboard.","Zapisują się na tym urządzeniu":"Saved on this device","Synchronizacja z muzyką":"Music sync","Jeśli nuty spadają za wcześnie albo za późno (zwłaszcza na słuchawkach Bluetooth), zrób kalibrację.":"If notes fall too early or too late (especially with Bluetooth headphones), calibrate the timing.","Kalibruj (20 sekund)":"Calibrate (20 seconds)","Przesunięcie":"Offset","nuty wcześniej":"notes earlier","nuty później":"notes later","Sterowanie":"Controls","Czułość palca":"Touch sensitivity","spokojniej":"slower","szybciej":"faster","Dźwięk":"Sound","Efekty łapania nut":"Note catching effects","Postęp":"Progress","Wyzeruj postęp i odznaki":"Reset progress and badges","Na pewno? Gwiazdki, ranking i odznaki znikną z tego urządzenia.":"Are you sure? Stars, scores and badges will be removed from this device.","Tak, wyzeruj":"Yes, reset","Anuluj":"Cancel","Kalibracja":"Calibration","Załóż słuchawki, których używasz do gry. Usłyszysz kliknięcia. Stukaj w duże koło razem z nimi.":"Put on the headphones you use to play. You will hear clicks. Tap the big circle in time with them.","Zapisz":"Save","Pauza":"Paused","Graj dalej":"Resume","Od nowa":"Restart","Wybór etapu":"Choose a stage","Koniec etapu!":"Stage complete!","Świetny groove":"Great groove","Nowy rekord":"New record","Wyślij wynik ponownie":"Resend score","Następny etap":"Next stage","Jeszcze raz":"Play again","Etapy":"Stages","Złote nuty":"Golden notes","Bonusy ×2":"Bonuses ×2","Najdłuższe combo":"Longest combo","Fałsze":"Wrong notes","Ranking etapu":"Stage leaderboard","Zapisz wynik":"Save score","Gram na żywo":"Live shows","[DATA] · [MIASTO]":"[DATE] · [CITY]","Trzy najlepsze wyniki wieczoru dostają wejściówkę na następny koncert.":"The top three scores of the night receive a ticket to the next concert.","Chcę dostawać od Marcina Nowakowskiego (Funky Cats Studio) e-maile z terminami koncertów, biletami i wejściówkami. Mogę się wypisać w każdej chwili.":"I want to receive emails from Marcin Nowakowski (Funky Cats Studio) about concerts and tickets. I can unsubscribe at any time.","Zapisz mnie na listę":"Join the list","Pokaż się na telebimie":"Appear on the big screen","Dodaj selfie: zobaczysz się nad sceną i na karcie wyniku.":"Add a selfie to appear above the stage and on your scorecard.","Dodaj":"Add","Pochwal się wynikiem":"Share your score","Więcej muzyki: nowakowski.net.pl":"More music: nowakowski.net.pl","Prototyp: ranking i zapis działają na razie tylko na tym urządzeniu.":"Prototype: scores and sign-ups are currently saved only on this device.","Karta wyniku":"Scorecard","Wyślij znajomym albo wrzuć na story":"Send to friends or post to your story","Rysuję kartę…":"Creating your card…","Udostępnij":"Share","Zapisz obrazek":"Save image","Skopiuj link do gry":"Copy game link","Dodaj swoje selfie do karty":"Add your selfie to the card","Na telefonie możesz też przytrzymać obrazek palcem i wybrać „Zapisz”.":"On a phone, you can also hold the image and select Save.","Obróć telefon":"Rotate your phone","Funky Cat gra się w pionie. Obróć telefon i wracamy na scenę.":"Funky Cat is played in portrait orientation. Rotate your phone to return to the stage.","WEJDŹ NA SCENĘ":"TAKE THE STAGE","WRÓĆ NA SCENĘ":"BACK TO THE STAGE","SPRÓBUJ PONOWNIE":"TRY AGAIN","Ta przeglądarka nie odtworzy dźwięku":"This browser cannot play audio","Nie udało się wczytać muzyki. Sprawdź internet i spróbuj jeszcze raz.":"Could not load the music. Check your connection and try again.","Nie udało się wczytać muzyki. Sprawdź internet i spróbuj ponownie.":"Could not load the music. Check your connection and try again.","Gra zatrzymała się po przejściu do innej aplikacji lub karty.":"The game paused because you switched apps or tabs.","Obróć telefon do pionu, aby kontynuować.":"Rotate your phone to portrait to continue.","Odpocznij chwilę — Twój wynik czeka.":"Take a break — your score is waiting.","Dotknij „Graj dalej”, aby włączyć dźwięk.":"Tap Resume to enable sound.","Postęp wyzerowany":"Progress reset","Pierwszy set":"First set","Ukończ dowolny etap":"Complete any stage","Złap 50 złotych nut z rzędu":"Catch 50 golden notes in a row","Złap 100 złotych nut z rzędu":"Catch 100 golden notes in a row","Czyste ucho":"Perfect pitch","Ukończ etap bez żadnego fałszu":"Complete a stage without a wrong note","Gwiazda bonusu":"Bonus star","Złap gwiazdę BONUS":"Catch the BONUS star","Łowca akcentów":"Accent hunter","Złap wszystkie bonusy ×2 w etapie":"Catch every ×2 bonus in a stage","Perfekcjonista":"Perfectionist","Zdobądź 3 gwiazdki w etapie":"Earn 3 stars in a stage","Cały utwór":"Full song","Ukończ etap 3":"Complete stage 3","Mistrz na różowo":"Pink master","Zdobądź wszystkie 9 gwiazdek":"Earn all 9 stars","Rozgrzewka. Spróbuj jeszcze raz!":"Warm-up. Try again!","Dobry rytm":"Good rhythm","Mistrz funku":"Funk master","Cały utwór zagrany!":"Full song complete!","Ale groove!":"What a groove!","Zagraj jeszcze raz":"Play again","Gość":"Guest","Wejście":"Opening","Solówka":"Solo","Wielki finał":"Grand finale","Intro, zwrotka i pierwszy refren":"Intro, verse and first chorus","Druga zwrotka, refren i solo":"Second verse, chorus and solo","Wyciszenie, ostatni refren i finał":"Breakdown, final chorus and finale","FAŁSZ!":"WRONG NOTE!","Deszcz nut!":"Note shower!","łap ile się da":"catch as many as you can","punkty ×2":"points ×2","Refren!":"Chorus!","TWÓJ SET":"YOUR SET","Przesuwaj palcem w lewo i w prawo":"Move your finger left and right","Ruszaj myszką albo strzałkami":"Move with the mouse or arrow keys","Wróć":"Back","Wróć do wyniku":"Back to score","Plansza gry Funky Cat":"Funky Cat game board","Kod konkursu":"Contest code","Nick (widoczny w rankingu)":"Nickname (visible on leaderboard)","E-mail (tylko do kontaktu w sprawie nagrody)":"Email (only for prize contact)","Kod z e-maila":"Email code","Twój nick":"Your nickname","Adres e-mail":"Email address","Twoje selfie na telebimie":"Your selfie on the big screen","Karta z Twoim wynikiem w Funky Cat":"Your Funky Cat scorecard","Gwiazdki":"Stars","Załóż słuchawki, których używasz do gry. Dotknij koła, a potem stukaj w nie równo z kliknięciami.":"Put on your gaming headphones. Tap the circle, then tap in time with the clicks.","Stukaj w koło dokładnie wtedy, gdy słyszysz kliknięcie.":"Tap the circle exactly when you hear a click.","Za mało stuknięć. Spróbuj jeszcze raz.":"Not enough taps. Try again.","Otwórz pełną wersję gry":"Open the full game","Przygotowuję…":"Preparing…","Przygotowuję selfie…":"Preparing selfie…","Selfie usunięte z tego urządzenia.":"Selfie removed from this device.","Nie udało się przygotować selfie. Spróbuj innego zdjęcia.":"Could not prepare selfie. Try another photo.","Nie udało się narysować karty.":"Could not create the card.","Nie udało się otworzyć udostępniania. Zapisz obrazek i wyślij go ręcznie.":"Could not open sharing. Save the image and send it manually.","Sprawdzam trwające konkursy…":"Checking current contests…","Teraz nie trwa żaden konkurs online. Masz kod z koncertu? Wpisz go poniżej.":"There are no online contests right now. Have a concert code? Enter it below.","Brak połączenia z serwerem konkursów. Spróbuj za chwilę.":"Cannot connect to the contest server. Try again shortly.","Weź udział":"Join","Zobacz":"View","Wysyłam kod…":"Sending code…","Kod wysłany. Sprawdź skrzynkę (także folder spam).":"Code sent. Check your inbox and spam folder.","Nie udało się wysłać kodu.":"Could not send the code.","Zły kod.":"Incorrect code.","Przygotowuję rozgrywkę…":"Preparing your game…","Nie udało się rozpocząć.":"Could not start.","Wpisz e-mail, którego użyłeś w konkursie.":"Enter the email you used for the contest.","Nie udało się sprawdzić.":"Could not check.","Nie znalazłem Twojego wyniku":"Your score was not found","Sprawdź, czy to ten sam e-mail.":"Check that you used the same email.","Liczę oficjalny wynik…":"Calculating official score…","Nie udało się zapisać wyniku.":"Could not save your score.","Ta rozgrywka nie została zaliczona (niepełny zapis gry). Spróbuj jeszcze raz.":"This game was not accepted because its record is incomplete. Try again."};
+Object.assign(dictionary, {"Nowe odznaki":"New badges","Nowa odznaka":"New badge","Ty (ta runda)":"You (this round)","Zapisano":"Saved","Wpisz poprawny adres e-mail, np. ania@example.com.":"Enter a valid email address, e.g. alex@example.com.","Zaznacz zgodę, żeby dostawać terminy koncertów i wejściówki.":"Please consent to receive concert news and tickets.","Zapisane na tym urządzeniu. W wersji koncertowej adres trafi prosto na listę Marcina.":"Saved on this device. In the concert version, your email will be added to Marcin’s list.","Stukaj!":"Tap!","Selfie działa w pełnej wersji gry: mn74-pixel.github.io/Funky-Cat":"Selfies work in the full version: mn74-pixel.github.io/Funky-Cat","Gotowe! Zobaczysz się na telebimie podczas bonusu i dużym combo.":"Done! You will appear on the big screen during bonuses and big combos.","Gotowe, ale tylko do zamknięcia gry (brak miejsca w pamięci przeglądarki).":"Done, but only until you close the game (browser storage is full).","Konkursy są chwilowo niedostępne.":"Contests are temporarily unavailable.","Brak połączenia z serwerem konkursów.":"Cannot connect to the contest server.","Konkurs online · trwa":"Online contest · live","Konkurs na koncercie · trwa":"Concert contest · live","Wkrótce":"Coming soon","Zakończony":"Ended","Zamknięty":"Closed","Wpisz kod podany na koncercie.":"Enter your concert code.","Sprawdzam kod…":"Checking code…","Nie ma takiego kodu.":"Code not found.","Najpierw wpisz poprawny e-mail.":"First enter a valid email address.","Wpisz 4-cyfrowy kod z e-maila.":"Enter the 4-digit code from your email.","Wpisz nick do rankingu.":"Enter a nickname for the leaderboard.","Wpisz poprawny e-mail. Napiszemy na niego tylko w sprawie nagrody.":"Enter a valid email. We will use it only to contact you about the prize.","Zaakceptuj regulamin konkursu.":"Accept the contest rules.","Sprawdzam…":"Checking…","Pokaż ten ekran przy stoisku z płytami.":"Show this screen at the merchandise stand.","Nagrodę wyślemy na Twój e-mail.":"We will send your prize by email.","Sprawdzamy wyniki. Kod nagrody pojawi się tutaj i przyjdzie e-mailem.":"We are checking the results. Your prize code will appear here and be emailed to you.","Tym razem bez nagrody. Do zobaczenia w następnym konkursie!":"No prize this time. See you in the next contest!","Muzyka: Marcin Nowakowski · „Na różowo”":"Music: Marcin Nowakowski · “Na różowo”","Zagraj: mn74-pixel.github.io/Funky-Cat":"Play: mn74-pixel.github.io/Funky-Cat","Pobijesz?":"Can you beat it?","Skopiowano link!":"Link copied!","Nie udało się skopiować linku.":"Could not copy the link."});
 var key = 'funkycat.language';
 var choice; try { choice=localStorage.getItem(key); } catch(e) {}
 if(choice!=='pl'&&choice!=='en') choice = /^pl(?:-|$)/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'pl':'en';
@@ -555,7 +558,7 @@ function localize(n){
  if(n.nodeType===3){var parent=n.parentElement;if(!parent||parent.closest('script,style,textarea,input,.rank'))return; var x=n.nodeValue, trimmed=x.trim();if(trimmed&&dictionary[trimmed]) n.nodeValue=x.replace(trimmed,window.fcTr(trimmed));}
  else if(n.nodeType===1){['placeholder','aria-label','alt'].forEach(function(a){var v=n.getAttribute(a);if(v&&dictionary[v])n.setAttribute(a,window.fcTr(v));});Array.from(n.childNodes).forEach(localize);}
 }
-function setup(){localize(document.getElementById('game'));var select=document.createElement('select');select.id='languageSelect';select.setAttribute('aria-label',choice==='pl'?'Język':'Language');select.style.cssText='width:100%;padding:12px;border-radius:12px;background:#251233;color:#fff;border:1px solid #ad79a7;font:inherit';select.innerHTML='<option value="auto">Auto</option><option value="pl">Polski</option><option value="en">English</option>';try{select.value=localStorage.getItem(key)||'auto';}catch(e){select.value='auto';} var card=document.createElement('div');card.className='card';var title=document.createElement('h3');title.textContent=choice==='pl'?'Język':'Language';card.appendChild(title);card.appendChild(select);var wrap=document.querySelector('#settings .wrap');wrap.insertBefore(card,wrap.children[1]);select.addEventListener('change',function(){try{if(select.value==='auto')localStorage.removeItem(key);else localStorage.setItem(key,select.value);location.reload();}catch(e){select.value=choice;var msg=document.createElement('p');msg.className='msg err';msg.textContent=choice==='pl'?'Nie można zapisać języka w tej przeglądarce.':'This browser cannot save your language choice.';card.appendChild(msg);}});
+function setup(){localize(document.getElementById('game'));var select=document.createElement('select');select.id='languageSelect';select.setAttribute('aria-label',choice==='pl'?'Język':'Language');select.style.cssText='width:100%;padding:12px;border-radius:12px;background:#251233;color:#fff;border:1px solid #ad79a7;font:inherit';select.innerHTML='<option value="auto">Auto</option><option value="pl">Polski</option><option value="en">English</option>';try{select.value=localStorage.getItem(key)||'auto';}catch(e){select.value='auto';} var card=document.createElement('div');card.className='card';var title=document.createElement('h3');title.textContent=choice==='pl'?'Język':'Language';card.appendChild(title);card.appendChild(select);var wrap=document.querySelector('#settings .wrap');wrap.insertBefore(card,wrap.children[1]);var quick=document.getElementById('languageQuick');quick.setAttribute('aria-label',choice==='pl'?'Zmień język na angielski':'Switch language to Polish');quick.addEventListener('click',function(){select.value=choice==='pl'?'en':'pl';select.dispatchEvent(new Event('change'));});select.addEventListener('change',function(){try{if(select.value==='auto')localStorage.removeItem(key);else localStorage.setItem(key,select.value);location.reload();}catch(e){select.value=choice;var msg=document.createElement('p');msg.className='msg err';msg.textContent=choice==='pl'?'Nie można zapisać języka w tej przeglądarce.':'This browser cannot save your language choice.';card.appendChild(msg);}});
 if(choice==='en'){new MutationObserver(function(records){records.forEach(function(r){if(r.type==='characterData')localize(r.target);else if(r.type==='attributes')localize(r.target);else r.addedNodes.forEach(localize);});}).observe(document.getElementById('game'),{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','placeholder','alt']});}
 }
 setup();
@@ -2025,7 +2028,7 @@ function startStage(si) {
 function startGame() { startStage(STAGE); }
 function pauseGame(reason) {
   if (G.mode !== 'play') return;
-  $('pauseReason').textContent = reason === 'background' ? 'Gra zatrzymała się po przejściu do innej aplikacji lub karty.' : (reason === 'orientation' ? 'Obróć telefon do pionu, aby kontynuować.' : window.fcTr('Odpocznij chwilę — Twój wynik czeka.'));
+  $('pauseReason').textContent = reason === 'background' ? window.fcTr('Gra zatrzymała się po przejściu do innej aplikacji lub karty.') : (reason === 'orientation' ? window.fcTr('Obróć telefon do pionu, aby kontynuować.') : window.fcTr('Odpocznij chwilę — Twój wynik czeka.'));
   G.mode = 'paused';
   inp.id = null; inp.left = false; inp.right = false;
   if (AC && AC.state === 'running') AC.suspend();
@@ -2117,7 +2120,7 @@ function showResults() {
   lastRun = { s: G.score, stars: stars, saved: false, stage: STAGE, combo: G.maxCombo, gold: G.gold, goldTotal: GOLD_TOTAL };
   $('resStage').textContent = (window.fcLanguage === 'en' ? 'Stage ' : 'Etap ') + (STAGE + 1) + ' · ' + STAGES[STAGE].name;
   var last = STAGE === STAGES.length - 1;
-  $('resTitle').textContent = last && stars >= 1 ? 'Cały utwór zagrany!' : (stars >= 2 ? 'Ale groove!' : window.fcTr('Koniec etapu!'));
+  $('resTitle').textContent = last && stars >= 1 ? window.fcTr('Cały utwór zagrany!') : (stars >= 2 ? window.fcTr('Ale groove!') : window.fcTr('Koniec etapu!'));
   $('resGradeName').textContent = GRADE_NAMES[stars];
   $('resRecord').hidden = !isRecord || G.score === 0;
   var un = $('resUnlock');
@@ -2134,7 +2137,7 @@ function showResults() {
   var got = checkBadges(stars), rb = $('resBadges');
   rb.textContent = '';
   if (got.length) {
-    var h = document.createElement('h3'); h.textContent = got.length > 1 ? 'Nowe odznaki' : 'Nowa odznaka'; rb.appendChild(h);
+    var h = document.createElement('h3'); h.textContent = got.length > 1 ? window.fcTr('Nowe odznaki') : window.fcTr('Nowa odznaka'); rb.appendChild(h);
     got.forEach(function (b) { var row = document.createElement('div'); row.appendChild(badgeIc(b)); var tx = document.createElement('span'); tx.textContent = b.name + ': ' + b.how.toLowerCase(); row.appendChild(tx); rb.appendChild(row); });
   }
   rb.hidden = !got.length;
@@ -2163,7 +2166,7 @@ function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
 function rankKey(si) { return 'rank' + (si + 1); }
 function rankRows(si, withRun) {
   var rows = store.get(rankKey(si), []).filter(function (r) { return r && typeof r.n === 'string' && typeof r.s === 'number' && isFinite(r.s); }).map(function (r) { return { n: r.n, s: r.s, st: r.st || 0, me: false }; });
-  if (withRun && lastRun && !lastRun.saved) rows.push({ n: 'Ty (ta runda)', s: lastRun.s, st: lastRun.stars, me: true });
+  if (withRun && lastRun && !lastRun.saved) rows.push({ n: window.fcTr('Ty (ta runda)'), s: lastRun.s, st: lastRun.stars, me: true });
   rows.sort(function (a, b) { return b.s - a.s; });
   return rows;
 }
@@ -2207,7 +2210,7 @@ $('nickForm').addEventListener('submit', function (e) {
   list.sort(function (a, b) { return b.s - a.s; });
   store.set(rankKey(lastRun.stage), list.slice(0, 30));
   lastRun.saved = true; lastRun.n = nick;
-  $('nickBtn').disabled = true; $('nickBtn').textContent = 'Zapisano';
+  $('nickBtn').disabled = true; $('nickBtn').textContent = window.fcTr('Zapisano');
   var rows = rankRows(lastRun.stage, false), ol = $('rankList'); ol.textContent = '';
   rows.slice(0, 5).forEach(function (r, i) { if (r.n === nick && r.s === lastRun.s) r.me = true; ol.appendChild(rankLi(r, i)); });
 });
@@ -2215,17 +2218,17 @@ $('mailForm').addEventListener('submit', function (e) {
   e.preventDefault();
   var em = $('mailInput').value.trim(), msg = $('mailMsg');
   msg.className = 'msg';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { msg.className = 'msg err'; msg.textContent = 'Wpisz poprawny adres e-mail, np. ania@example.com.'; return; }
-  if (!$('mailConsent').checked) { msg.className = 'msg err'; msg.textContent = 'Zaznacz zgodę, żeby dostawać terminy koncertów i wejściówki.'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { msg.className = 'msg err'; msg.textContent = window.fcTr('Wpisz poprawny adres e-mail, np. ania@example.com.'); return; }
+  if (!$('mailConsent').checked) { msg.className = 'msg err'; msg.textContent = window.fcTr('Zaznacz zgodę, żeby dostawać terminy koncertów i wejściówki.'); return; }
   var list = store.get('signups', []); list.push({ e: em, d: Date.now() }); store.set('signups', list.slice(-50));
-  msg.textContent = 'Zapisane na tym urządzeniu. W wersji koncertowej adres trafi prosto na listę Marcina.';
+  msg.textContent = window.fcTr('Zapisane na tym urządzeniu. W wersji koncertowej adres trafi prosto na listę Marcina.');
 });
 function refreshTitle() {
-  document.querySelector('.set-label span:last-child').textContent = totalStars() + '/9 ★ · 3 ETAPY';
+  document.querySelector('.set-label span:last-child').textContent = totalStars() + (window.fcLanguage === 'en' ? '/9 ★ · 3 STAGES' : '/9 ★ · 3 ETAPY');
   var seen = store.get('badgeSeen', 0), have = Object.keys(store.get('badges', {})).length;
   $('badgeDot').hidden = have <= seen;
   if (typeof syncSelfieUI === 'function' && $('selfieImg')) try { syncSelfieUI(); } catch (e) {}
-  if (audioReady) { playBtn.disabled = false; playBtn.textContent = totalStars() ? 'WRÓĆ NA SCENĘ' : window.fcTr('WEJDŹ NA SCENĘ'); }
+  if (audioReady) { playBtn.disabled = false; playBtn.textContent = totalStars() ? window.fcTr('WRÓĆ NA SCENĘ') : window.fcTr('WEJDŹ NA SCENĘ'); }
 }
 playBtn.addEventListener('click', function () {
   if (!audioReady || (!stageInfo(0).best && !stageInfo(0).stars)) startStage(0);
@@ -2273,7 +2276,7 @@ function calibStart() {
       var tk = t0 + k * CB.IV; CB.clicks.push(tk);
       tone(k % 4 === 0 ? 1760 : 1320, tk, 0.22, 0.06, 'sine', 0.001);
     }
-    $('calibPadTxt').textContent = 'Stukaj!';
+    $('calibPadTxt').textContent = window.fcTr('Stukaj!');
     $('calibText').textContent = window.fcTr('Stukaj w koło dokładnie wtedy, gdy słyszysz kliknięcie.');
     CB.tm = setTimeout(calibFinish, (0.6 + CB.N * CB.IV + 0.4) * 1000);
   });
@@ -2300,13 +2303,13 @@ function calibFinish() {
   var e = CB.errs.slice().sort(function (a, b) { return a - b; });
   var med = e[Math.floor(e.length / 2)];
   CB.result = clamp(Math.round(med * 1000 / 5) * 5, -250, 350);
-  $('calibRes').textContent = 'Twoje przesunięcie: ' + (CB.result > 0 ? '+' : '') + CB.result + ' ms';
+  $('calibRes').textContent = (window.fcLanguage === 'en' ? 'Your offset: ' : 'Twoje przesunięcie: ') + (CB.result > 0 ? '+' : '') + CB.result + ' ms';
   $('calibPadTxt').textContent = window.fcTr('Jeszcze raz');
   $('calibSave').hidden = false;
 }
 $('calibPad').addEventListener('pointerdown', function (e) { e.preventDefault(); calibTap(); });
 $('calibPad').addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); calibTap(); } });
-$('calibSave').addEventListener('click', function () { CAL = CB.result; store.set('cal', CAL); openPanel('settings'); toast('Zapisano przesunięcie ' + (CAL > 0 ? '+' : '') + CAL + ' ms'); });
+$('calibSave').addEventListener('click', function () { CAL = CB.result; store.set('cal', CAL); openPanel('settings'); toast((window.fcLanguage === 'en' ? 'Offset saved: ' : 'Zapisano przesunięcie ') + (CAL > 0 ? '+' : '') + CAL + ' ms'); });
 $('calibCancel').addEventListener('click', function () { openPanel('settings'); });
 
 /* ================================================================ selfie: FAN CAM + share card */
@@ -2357,10 +2360,10 @@ function syncSelfieUI() {
   $('selfieImg').hidden = !has; $('selfieEmpty').hidden = has;
   if (has && $('selfieImg').getAttribute('src') !== SELFIE.happy.src) $('selfieImg').src = SELFIE.happy.src;
   $('selfieCam').classList.toggle('busy', selfieBusy);
-  $('selfieAdd').textContent = selfieOff && !has ? 'Otwórz pełną wersję gry' : (selfieBusy ? 'Przygotowuję…' : (has ? 'Zmień selfie' : window.fcTr('Dodaj selfie')));
+  $('selfieAdd').textContent = selfieOff && !has ? window.fcTr('Otwórz pełną wersję gry') : (selfieBusy ? window.fcTr('Przygotowuję…') : (has ? window.fcTr('Zmień selfie') : window.fcTr('Dodaj selfie')));
   $('selfieAdd').disabled = selfieBusy;
   $('selfieDel').hidden = !has || selfieBusy;
-  $('cardSelfie').textContent = selfieBusy ? 'Przygotowuję selfie…' : (has ? 'Zmień selfie' : window.fcTr('Dodaj swoje selfie do karty'));
+  $('cardSelfie').textContent = selfieBusy ? window.fcTr('Przygotowuję selfie…') : (has ? window.fcTr('Zmień selfie') : window.fcTr('Dodaj swoje selfie do karty'));
   $('cardSelfie').disabled = selfieBusy;
   $('cardSelfie').hidden = selfieOff;
   $('resCamAdd').disabled = selfieBusy;
@@ -2397,13 +2400,13 @@ $('selfieFile').addEventListener('change', function () {
     return m.makeSelfie(f, function (s) { selfieMsg(s); });
   }, function () {
     selfieOff = true;
-    throw new Error('Selfie działa w pełnej wersji gry: mn74-pixel.github.io/Funky-Cat');
+    throw new Error(window.fcTr('Selfie działa w pełnej wersji gry: mn74-pixel.github.io/Funky-Cat'));
   }).then(function (u) {
     selfieBusy = false;
     SELFIE = selfieFromUrls(u);
     var kept = saveSelfie(u);
     syncSelfieUI();
-    selfieMsg(kept ? 'Gotowe! Zobaczysz się na telebimie podczas bonusu i dużym combo.' : 'Gotowe, ale tylko do zamknięcia gry (brak miejsca w pamięci przeglądarki).');
+    selfieMsg(kept ? window.fcTr('Gotowe! Zobaczysz się na telebimie podczas bonusu i dużym combo.') : window.fcTr('Gotowe, ale tylko do zamknięcia gry (brak miejsca w pamięci przeglądarki).'));
     if (!$('shareCard').hidden) SELFIE.happy.onload = function () { openCard(); };
     if (!$('shareCard').hidden && selfieReady(SELFIE.happy)) openCard();
   }).catch(function (e) {
@@ -2608,29 +2611,29 @@ function renderCard(run) {
   x.font = '120px Bungee';
   var sw = x.measureText(sc).width;
   x.font = '800 40px Outfit';
-  var pw = x.measureText(' pkt').width, sx0 = 540 - (sw + pw) / 2;
+  var pw = x.measureText(window.fcLanguage === 'en' ? ' pts' : ' pkt').width, sx0 = 540 - (sw + pw) / 2;
   x.textAlign = 'left';
   x.font = '120px Bungee';
   x.fillStyle = '#6b1550'; x.fillText(sc, sx0 + 6, 1170);
   x.fillStyle = '#ffc23d'; x.fillText(sc, sx0, 1164);
-  x.font = '800 40px Outfit'; x.fillStyle = '#ffd3e8'; x.fillText(' pkt', sx0 + sw, 1164);
+  x.font = '800 40px Outfit'; x.fillStyle = '#ffd3e8'; x.fillText(window.fcLanguage === 'en' ? ' pts' : ' pkt', sx0 + sw, 1164);
   x.textAlign = 'center'; x.font = '600 30px Outfit'; x.fillStyle = '#ff9ccd';
-  x.fillText(GRADE_NAMES[run.stars].replace(/\..*$/, '') + '  ·  combo ' + run.combo + '  ·  złote nuty ' + Math.round(run.gold * 100 / Math.max(1, run.goldTotal)) + '%', 540, 1216);
+  x.fillText(GRADE_NAMES[run.stars].replace(/\..*$/, '') + '  ·  combo ' + run.combo + (window.fcLanguage === 'en' ? '  ·  golden notes ' : '  ·  złote nuty ') + Math.round(run.gold * 100 / Math.max(1, run.goldTotal)) + '%', 540, 1216);
   // footer
   x.fillStyle = 'rgba(255,79,163,0.16)'; x.fillRect(0, 1248, W, H - 1248);
   x.fillStyle = 'rgba(255,79,163,0.7)'; x.fillRect(0, 1248, W, 3);
   x.textAlign = 'left';
-  x.font = '800 31px Outfit'; x.fillStyle = '#fff3e6'; x.fillText('Muzyka: Marcin Nowakowski · „Na różowo”', 56, 1294);
-  x.font = '600 29px Outfit'; x.fillStyle = '#ffc23d'; x.fillText('Zagraj: mn74-pixel.github.io/Funky-Cat', 56, 1332);
+  x.font = '800 31px Outfit'; x.fillStyle = '#fff3e6'; x.fillText(window.fcTr('Muzyka: Marcin Nowakowski · „Na różowo”'), 56, 1294);
+  x.font = '600 29px Outfit'; x.fillStyle = '#ffc23d'; x.fillText(window.fcTr('Zagraj: mn74-pixel.github.io/Funky-Cat'), 56, 1332);
   x.textAlign = 'right'; x.font = '50px Shrikhand';
-  x.fillStyle = '#6b1550'; x.fillText('Pobijesz?', 1027, 1319);
-  x.fillStyle = '#ff4fa3'; x.fillText('Pobijesz?', 1024, 1316);
+  x.fillStyle = '#6b1550'; x.fillText(window.fcTr('Pobijesz?'), 1027, 1319);
+  x.fillStyle = '#ff4fa3'; x.fillText(window.fcTr('Pobijesz?'), 1024, 1316);
   x.textAlign = 'left'; x.font = '600 26px Outfit'; x.fillStyle = 'rgba(255,211,232,0.72)'; x.fillText('nowakowski.net.pl', 56, 58);
   return c;
 }
 function shareText() {
   var r = lastRun || { s: 0, stage: 0 };
-  return 'Mam ' + fmt(r.s) + ' pkt w etapie ' + (r.stage + 1) + ' gry Funky Cat na różowo, do muzyki Marcina Nowakowskiego. Pobijesz? ' + GAME_URL;
+  return window.fcLanguage === 'en' ? 'I scored ' + fmt(r.s) + ' points on stage ' + (r.stage + 1) + ' of Funky Cat, with music by Marcin Nowakowski. Can you beat it? ' + GAME_URL : 'Mam ' + fmt(r.s) + ' pkt w etapie ' + (r.stage + 1) + ' gry Funky Cat na różowo, do muzyki Marcina Nowakowskiego. Pobijesz? ' + GAME_URL;
 }
 var cardBlob = null, cardUrl = null, cardFile = null;
 function openCard() {
@@ -2713,23 +2716,23 @@ function api(path, body) {
   var opt = body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : { method: 'GET' };
   if (ctl) opt.signal = ctl.signal;
   return fetch(API + path, opt).then(function (r) {
-    return r.json().catch(function () { return { ok: false, error: 'Konkursy są chwilowo niedostępne.' }; });
-  }, function () { return { ok: false, error: 'Brak połączenia z serwerem konkursów.', offline: true }; })
+    return r.json().catch(function () { return { ok: false, error: window.fcTr('Konkursy są chwilowo niedostępne.') }; });
+  }, function () { return { ok: false, error: window.fcTr('Brak połączenia z serwerem konkursów.'), offline: true }; })
     .then(function (j) { clearTimeout(tm); return j || { ok: false }; });
 }
 function fmtDate(d) {
-  try { var x = new Date(d); return x.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long' }) + ', ' + x.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; }
+  try { var x = new Date(d); return x.toLocaleDateString(window.fcLanguage === 'en' ? 'en-GB' : 'pl-PL', { day: 'numeric', month: 'long' }) + ', ' + x.toLocaleTimeString(window.fcLanguage === 'en' ? 'en-GB' : 'pl-PL', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; }
 }
 function ctCardHtml(c) {
   var d = document.createElement('div');
   d.className = 'ct-card' + (c.state === 'open' ? ' live' : '');
   var tag = document.createElement('span'); tag.className = 'tag';
-  tag.textContent = c.state === 'open' ? (c.type === 'online' ? 'Konkurs online · trwa' : 'Konkurs na koncercie · trwa') : (c.state === 'soon' ? 'Wkrótce' : (c.state === 'ended' ? 'Zakończony' : 'Zamknięty'));
-  var b = document.createElement('b'); b.textContent = c.name || ('Konkurs ' + c.code);
+  tag.textContent = c.state === 'open' ? (c.type === 'online' ? window.fcTr('Konkurs online · trwa') : window.fcTr('Konkurs na koncercie · trwa')) : (c.state === 'soon' ? window.fcTr('Wkrótce') : (c.state === 'ended' ? window.fcTr('Zakończony') : window.fcTr('Zamknięty')));
+  var b = document.createElement('b'); b.textContent = c.name || ((window.fcLanguage === 'en' ? 'Contest ' : 'Konkurs ') + c.code);
   var m = document.createElement('span'); m.className = 'meta';
-  m.textContent = (window.fcLanguage === 'en' ? 'Stage ' : 'Etap ') + c.stage + ' · ' + STAGES[(c.stage || 1) - 1].name + ' · nagrody dla ' + c.prizes + ' najlepszych' +
-    (c.endsAt ? (c.state === 'soon' && c.startsAt ? ' · start ' + fmtDate(c.startsAt) : ' · do ' + fmtDate(c.endsAt)) : '') +
-    (c.attemptsPerDay ? ' · ' + c.attemptsPerDay + ' podejścia dziennie' : '');
+  m.textContent = (window.fcLanguage === 'en' ? 'Stage ' : 'Etap ') + c.stage + ' · ' + STAGES[(c.stage || 1) - 1].name + (window.fcLanguage === 'en' ? ' · prizes for the top ' + c.prizes : ' · nagrody dla ' + c.prizes + ' najlepszych') +
+    (c.endsAt ? (c.state === 'soon' && c.startsAt ? ' · start ' + fmtDate(c.startsAt) : (window.fcLanguage === 'en' ? ' · until ' : ' · do ') + fmtDate(c.endsAt)) : '') +
+    (c.attemptsPerDay ? ' · ' + c.attemptsPerDay + (window.fcLanguage === 'en' ? ' attempts per day' : ' podejścia dziennie') : '');
   d.appendChild(tag); d.appendChild(b); d.appendChild(m);
   return d;
 }
@@ -2739,11 +2742,11 @@ function ctOpenPanel() {
   var w = document.createElement('p'); w.className = 'txt'; w.textContent = window.fcTr('Sprawdzam trwające konkursy…'); box.appendChild(w);
   api('contests').then(function (j) {
     box.textContent = '';
-    if (!j.ok) { var e = document.createElement('p'); e.className = 'txt'; e.textContent = j.offline ? 'Brak połączenia z serwerem konkursów. Spróbuj za chwilę.' : window.fcTr('Teraz nie trwa żaden konkurs online. Masz kod z koncertu? Wpisz go poniżej.'); box.appendChild(e); return; }
+    if (!j.ok) { var e = document.createElement('p'); e.className = 'txt'; e.textContent = j.offline ? window.fcTr('Brak połączenia z serwerem konkursów. Spróbuj za chwilę.') : window.fcTr('Teraz nie trwa żaden konkurs online. Masz kod z koncertu? Wpisz go poniżej.'); box.appendChild(e); return; }
     if (!j.contests.length) { var n = document.createElement('p'); n.className = 'txt'; n.textContent = window.fcTr('Teraz nie trwa żaden konkurs online. Masz kod z koncertu? Wpisz go poniżej.'); box.appendChild(n); return; }
     j.contests.forEach(function (c) {
       var card = ctCardHtml(c);
-      var btn = document.createElement('button'); btn.className = 'btn btn-primary'; btn.type = 'button'; btn.textContent = c.state === 'open' ? 'Weź udział' : window.fcTr('Zobacz');
+      var btn = document.createElement('button'); btn.className = 'btn btn-primary'; btn.type = 'button'; btn.textContent = c.state === 'open' ? window.fcTr('Weź udział') : window.fcTr('Zobacz');
       btn.addEventListener('click', function () { ctSelect(c); });
       card.appendChild(btn); box.appendChild(card);
     });
@@ -2777,10 +2780,10 @@ function ctBoard(code) {
 }
 function ctCodeSubmit(code) {
   code = String(code || '').trim().toUpperCase().replace(/\s+/g, '');
-  if (!code) { ctMsg('Wpisz kod podany na koncercie.', true); return; }
-  ctMsg('Sprawdzam kod…');
+  if (!code) { ctMsg(window.fcTr('Wpisz kod podany na koncercie.'), true); return; }
+  ctMsg(window.fcTr('Sprawdzam kod…'));
   api('challenge?code=' + encodeURIComponent(code)).then(function (j) {
-    if (!j.ok) { ctMsg(j.error || 'Nie ma takiego kodu.', true); return; }
+    if (!j.ok) { ctMsg(j.error || window.fcTr('Nie ma takiego kodu.'), true); return; }
     ctSelect(j);
   });
 }
@@ -2793,7 +2796,7 @@ $('ctEmail').addEventListener('input', function () {
 });
 $('ctSend').addEventListener('click', function () {
   var email = $('ctEmail').value.trim();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { ctMsg('Najpierw wpisz poprawny e-mail.', true); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { ctMsg(window.fcTr('Najpierw wpisz poprawny e-mail.'), true); return; }
   this.disabled = true; var self = this;
   ctMsg(window.fcTr('Wysyłam kod…'));
   api('verifySend', { email: email, nick: $('ctNick').value.trim() }).then(function (j) {
@@ -2808,7 +2811,7 @@ function ctVerifyThen(email, next) {
   var store_ = store.get('ctVerify', {}) || {};
   if (!CT.contest.verify || store_[email]) return next(store_[email] || '');
   var code = $('ctVcode').value.trim();
-  if (!/^\d{4}$/.test(code)) { ctMsg('Wpisz 4-cyfrowy kod z e-maila.', true); return; }
+  if (!/^\d{4}$/.test(code)) { ctMsg(window.fcTr('Wpisz 4-cyfrowy kod z e-maila.'), true); return; }
   api('verifyCheck', { email: email, code: code }).then(function (j) {
     if (!j.ok) { ctMsg(j.error || window.fcTr('Zły kod.'), true); return; }
     store_[email] = j.verifyToken; store.set('ctVerify', store_);
@@ -2820,9 +2823,9 @@ $('ctForm').addEventListener('submit', function (e) {
   e.preventDefault();
   var c = CT.contest; if (!c || c.state !== 'open') return;
   var nick = $('ctNick').value.trim(), email = $('ctEmail').value.trim().toLowerCase();
-  if (!nick) { ctMsg('Wpisz nick do rankingu.', true); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { ctMsg('Wpisz poprawny e-mail. Napiszemy na niego tylko w sprawie nagrody.', true); return; }
-  if (!$('ctRules').checked) { ctMsg('Zaakceptuj regulamin konkursu.', true); return; }
+  if (!nick) { ctMsg(window.fcTr('Wpisz nick do rankingu.'), true); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { ctMsg(window.fcTr('Wpisz poprawny e-mail. Napiszemy na niego tylko w sprawie nagrody.'), true); return; }
+  if (!$('ctRules').checked) { ctMsg(window.fcTr('Zaakceptuj regulamin konkursu.'), true); return; }
   store.set('nick', nick); store.set('ctEmail', email); store.set('ctConsent', $('ctConsent').checked);
   ctVerifyThen(email, function (vt) {
     $('ctPlay').disabled = true; ctMsg(window.fcTr('Przygotowuję rozgrywkę…'));
@@ -2840,7 +2843,7 @@ $('ctForm').addEventListener('submit', function (e) {
 $('ctCheck').addEventListener('click', function () {
   var email = $('ctEmail').value.trim().toLowerCase(), c = CT.contest;
   if (!email) { ctMsg(window.fcTr('Wpisz e-mail, którego użyłeś w konkursie.'), true); return; }
-  ctMsg('Sprawdzam…');
+  ctMsg(window.fcTr('Sprawdzam…'));
   api('status?code=' + encodeURIComponent(c.code) + '&email=' + encodeURIComponent(email)).then(function (j) {
     var w = $('ctWin'); w.textContent = '';
     if (!j.ok) { ctMsg(j.error || window.fcTr('Nie udało się sprawdzić.'), true); return; }
@@ -2849,12 +2852,12 @@ $('ctCheck').addEventListener('click', function () {
     var h = document.createElement('b'); var p = document.createElement('span');
     if (!j.played) { h.textContent = window.fcTr('Nie znalazłem Twojego wyniku'); p.textContent = window.fcTr('Sprawdź, czy to ten sam e-mail.'); }
     else if (j.winCode) {
-      h.textContent = 'Wygrałeś! Miejsce ' + j.rank;
+      h.textContent = (window.fcLanguage === 'en' ? 'You won! Place ' : 'Wygrałeś! Miejsce ') + j.rank;
       var code = document.createElement('span'); code.className = 'code'; code.textContent = j.winCode; box.appendChild(h); box.appendChild(code);
-      p.textContent = j.type === 'koncert' ? 'Pokaż ten ekran przy stoisku z płytami.' : 'Nagrodę wyślemy na Twój e-mail.';
+      p.textContent = j.type === 'koncert' ? window.fcTr('Pokaż ten ekran przy stoisku z płytami.') : window.fcTr('Nagrodę wyślemy na Twój e-mail.');
       box.appendChild(p); w.appendChild(box); return;
-    } else if (j.pending) { h.textContent = 'Miejsce ' + j.rank + ' – gratulacje!'; p.textContent = 'Sprawdzamy wyniki. Kod nagrody pojawi się tutaj i przyjdzie e-mailem.'; }
-    else { h.textContent = 'Twoje miejsce: ' + j.rank; p.textContent = 'Tym razem bez nagrody. Do zobaczenia w następnym konkursie!'; }
+    } else if (j.pending) { h.textContent = (window.fcLanguage === 'en' ? 'Place ' + j.rank + ' – congratulations!' : 'Miejsce ' + j.rank + ' – gratulacje!'); p.textContent = window.fcTr('Sprawdzamy wyniki. Kod nagrody pojawi się tutaj i przyjdzie e-mailem.'); }
+    else { h.textContent = (window.fcLanguage === 'en' ? 'Your place: ' : 'Twoje miejsce: ') + j.rank; p.textContent = window.fcTr('Tym razem bez nagrody. Do zobaczenia w następnym konkursie!'); }
     box.appendChild(h); box.appendChild(p); w.appendChild(box);
   });
 });
@@ -2874,7 +2877,7 @@ function encodeTrace(arr) {
 function ctSubmit() {
   var run = CT.pending; if (!run) return;
   var card = $('resContest'); card.hidden = false;
-  $('rcTitle').textContent = run.contest.name || ('Konkurs ' + run.code);
+  $('rcTitle').textContent = run.contest.name || ((window.fcLanguage === 'en' ? 'Contest ' : 'Konkurs ') + run.code);
   $('rcMsg').className = 'msg'; $('rcMsg').textContent = window.fcTr('Liczę oficjalny wynik…');
   $('rcRetry').hidden = true; $('rcBoard').textContent = '';
   api('finish', { token: run.token, trace: run.trace }).then(function (j) {
@@ -2885,9 +2888,9 @@ function ctSubmit() {
     CT.pending = null;
     if (j.rejected) { $('rcMsg').className = 'msg err'; $('rcMsg').textContent = window.fcTr('Ta rozgrywka nie została zaliczona (niepełny zapis gry). Spróbuj jeszcze raz.'); }
     else {
-      $('rcMsg').textContent = 'Oficjalny wynik: ' + fmt(j.official) + ' pkt · Twoje miejsce: ' + j.rank +
-        (j.best > j.official ? ' (liczy się Twój lepszy wynik: ' + fmt(j.best) + ')' : '') +
-        (j.contest && j.contest.endsAt ? '. Zwycięzców poznasz po ' + fmtDate(j.contest.endsAt) + '.' : '');
+      $('rcMsg').textContent = (window.fcLanguage === 'en' ? 'Official score: ' : 'Oficjalny wynik: ') + fmt(j.official) + (window.fcLanguage === 'en' ? ' pts · Your place: ' : ' pkt · Twoje miejsce: ') + j.rank +
+        (j.best > j.official ? (window.fcLanguage === 'en' ? ' (your best score counts: ' : ' (liczy się Twój lepszy wynik: ') + fmt(j.best) + ')' : '') +
+        (j.contest && j.contest.endsAt ? (window.fcLanguage === 'en' ? '. Winners will be announced after ' : '. Zwycięzców poznasz po ') + fmtDate(j.contest.endsAt) + '.' : '');
     }
     var ol = $('rcBoard'); ol.textContent = '';
     (j.top || []).forEach(function (r, i) { ol.appendChild(rankLi({ n: r.nick, s: r.score, st: r.stars, me: r.nick === store.get('nick', '') && r.score === j.best }, i)); });
