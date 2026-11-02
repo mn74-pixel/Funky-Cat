@@ -1139,10 +1139,12 @@ var FUR = '#fff1e8', FUR_SH = '#f1d3cb', BELLY = '#fffaf6', INNER = '#ff9cc8', O
 var GOLD_B = '#f5b62e', GOLD_S = '#c98510', GOLD_H = '#ffe7a0';
 var cat = { x: 0.5, tx: 0.5, vx: 0, lean: 0, squash: 0, dizzy: 0, flash: 0, raise: 0, ear: 0, earT: 2, nod: 0 };
 
+function titleCatBob(now) { return reduceMotion ? 0 : 0.45 * (1 - Math.cos(now * 1.5)); }
+
 function drawCat(cx, feetY, now, beatFrac, playing) {
   var s = CAT_H / 100;
   if (G.mode === 'title') s *= VW >= 900 ? 2.45 : (VH < 740 ? 1.23 : 1.55);
-  var bob = (playing ? 1 : 0.6) * Math.pow(1 - beatFrac, 2) * 2.6;
+  var bob = G.mode === 'title' ? titleCatBob(now) : (playing ? 1 : 0.6) * Math.pow(1 - beatFrac, 2) * 2.6;
   var wob = cat.dizzy > 0 ? Math.sin(now * 32) * 0.16 * cat.dizzy : 0;
   // floor shadow + spotlight pool
   g.save();
@@ -1167,7 +1169,7 @@ function drawCat(cx, feetY, now, beatFrac, playing) {
   var LW = 2.6;
 
   // tail
-  var ta = Math.sin(now * 3.2) * 0.32 - cat.lean * 1.6;
+  var ta = G.mode === 'title' ? (reduceMotion ? 0 : Math.sin(now * 1.2) * 0.1) : Math.sin(now * 3.2) * 0.32 - cat.lean * 1.6;
   g.beginPath();
   g.moveTo(-14, -10);
   g.bezierCurveTo(-34, -8, -42 - ta * 8, -26, -34 - ta * 14, -48 + Math.abs(ta) * 5);
@@ -3078,6 +3080,10 @@ function drawCatchStage(t,pulse) {
   g.globalAlpha=1;var cx=PX+cat.x*PW;
   // The player gets an immediate, musical response on a successful catch.
   if(cat.flash>.02){
+    if (!reduceMotion) {
+      g.save(); g.globalCompositeOperation='lighter'; g.globalAlpha=cat.flash*.16;
+      g.drawImage(SPR.glowGold.c,cx-NOTE_R*2.2,Y_CATCH-NOTE_R*2.2,NOTE_R*4.4,NOTE_R*4.4); g.restore();
+    }
     var wave=1-cat.flash;g.strokeStyle='rgba(255,223,157,'+(cat.flash*.65)+')';g.lineWidth=2;
     g.beginPath();g.ellipse(cx,Y_CATCH,CATCH_HW*PW*(1+wave),7+wave*13,0,0,TAU);g.stroke();
   }
@@ -3238,11 +3244,11 @@ function frame(nowMs) {
     timeline(t);
     recordTrace(t);
   } else if (G.mode === 'title') {
-    demoUpdate(now, dt);
-    if (!demo.length) cat.tx = 0.5 + Math.sin(now * 0.6) * 0.05;
-    var px1 = cat.x;
-    cat.x += (cat.tx - cat.x) * (1 - Math.exp(-dt * 7));
-    cat.vx = (cat.x - px1) / Math.max(dt, 1e-3);
+    // The title hero is drawn at a fixed position. Do not run the old hidden
+    // note-catching demo: it injected sudden squash, flashes and head nods.
+    cat.tx = 0.5;
+    cat.x += (0.5 - cat.x) * (1 - Math.exp(-dt * 7));
+    cat.vx = 0;
   }
   if (G.mode !== 'paused') {
     cat.lean += (clamp(cat.vx * 0.09, -0.3, 0.3) - cat.lean) * (1 - Math.exp(-dt * 12));
