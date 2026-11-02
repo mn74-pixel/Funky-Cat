@@ -294,6 +294,7 @@ input[type=range]{width:100%;accent-color:var(--pink);height:32px}
 @media(max-width:899px){#start{align-items:center}.start-head{max-width:440px}.start-deck{margin-top:180px;max-width:400px}.logo-top{font-size:clamp(50px,14vw,72px)}.logo-sub{font-size:clamp(28px,8vw,38px)}.eyebrow{margin-bottom:14px;font-size:9px}.credit{margin-top:16px}.start-copy{font-size:12px;margin-top:8px}.start-foot{padding-top:12px}.start-deck{padding:16px;gap:12px}.hint{display:block!important}}
 @media(max-width:899px) and (max-height:740px){#start{padding-top:max(16px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom))}.eyebrow{margin-bottom:10px}.logo-top{font-size:48px}.logo-sub{font-size:27px;margin-top:5px}.credit{margin-top:12px}.start-copy{display:none}.start-deck{margin-top:145px;gap:10px;padding:14px}.set-label{font-size:9px}.howto{gap:8px}.howto li,.howto b{font-size:10px}.btn-play{min-height:54px;font-size:20px}.menu-btn{min-height:48px;padding:6px 2px}.start-foot{font-size:9px;padding-top:8px}}
 @media(max-width:360px) and (max-height:620px){.start-deck{margin-top:115px;padding:12px;gap:8px}.start-foot{display:none}.howto .ic,.howto svg{width:22px;height:22px}.howto li{grid-template-columns:22px 1fr}.menu-btn{min-height:44px}.set-label{font-size:8px}}
+.badge .bi{letter-spacing:-.03em}.res-stars span.on{filter:drop-shadow(0 3px 8px #ffcc5b66)}.stage:not(.locked) .play-ic{background:linear-gradient(145deg,#ffe8a5,#ffbd36);box-shadow:0 4px 0 #a96c22,0 8px 20px #ffc23d25}.rank.big li:first-child{border-color:#ffc23d70;background:linear-gradient(110deg,#64442d,#2b1b30)}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 </style>
@@ -363,7 +364,7 @@ input[type=range]{width:100%;accent-color:var(--pink);height:32px}
     <div class="wrap">
       <header class="top"><button class="back" type="button" data-back aria-label="Wróć"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h2>Fan cam</h2><p class="top-sub">Twoja twarz na telebimie nad sceną</p></div></header>
       <div class="cam" id="selfieCam"><span class="cam-label">FAN CAM</span><span class="cam-live"><i></i>LIVE</span><div class="cam-screen"><img id="selfieImg" alt="Twoje selfie na telebimie" hidden><div class="cam-empty" id="selfieEmpty"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="3"/><path d="M8 44c1.5-9 8-14 16-14s14.5 5 16 14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div></div></div>
-      <p class="txt" id="selfieTxt">Dodaj selfie, a gra wytnie z niego Twoją głowę. Pojawisz się na telebimie przy solówce i przy combo 50 i 100. Twoja twarz trafi też na kartę wyniku, którą wyślesz znajomym.</p>
+      <p class="txt" id="selfieTxt">Dodaj selfie, a gra wytnie z niego Twoją głowę. Pojawisz się na telebimie podczas bonusu i przy combo 50 i 100. Twoja twarz trafi też na kartę wyniku, którą wyślesz znajomym.</p>
       <div class="sel-actions">
         <button class="btn btn-primary" id="selfieAdd" type="button">Dodaj selfie</button>
         <button class="btn" id="selfieDel" type="button" hidden>Usuń selfie</button>
@@ -573,7 +574,16 @@ var coarse = false;
 try { coarse = matchMedia('(pointer: coarse)').matches; } catch (e) {}
 
 var store = {
-  get: function (k, d) { try { var v = localStorage.getItem('fcNR_' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  get: function (k, d) { try {
+    var v = localStorage.getItem('fcNR_' + k); if (v == null) return d;
+    var parsed = JSON.parse(v);
+    if (parsed === null) return d;
+    if (Array.isArray(d) && !Array.isArray(parsed)) return d;
+    if (d && typeof d === 'object' && !Array.isArray(d) && (typeof parsed !== 'object' || Array.isArray(parsed))) return d;
+    if (typeof d === 'number' && (typeof parsed !== 'number' || !isFinite(parsed))) return d;
+    if (typeof d === 'boolean' && typeof parsed !== 'boolean') return d;
+    return parsed;
+  } catch (e) { return d; } },
   set: function (k, v) { try { localStorage.setItem('fcNR_' + k, JSON.stringify(v)); } catch (e) {} }
 };
 
@@ -771,12 +781,15 @@ function noteSprite(r, kind, accent) {
         c[j ? 'lineTo' : 'moveTo'](Math.cos(a2) * rr2, Math.sin(a2) * rr2);
       }
       c.closePath();
-      c.fillStyle = C.pinkHot; c.fill();
+      var starGlow = c.createLinearGradient(0,-R1,0,R1);
+      starGlow.addColorStop(0,'#ffbadb');starGlow.addColorStop(.38,'#ff5baa');starGlow.addColorStop(1,'#b61470');
+      c.fillStyle = starGlow; c.fill();
       c.lineJoin = 'round'; c.lineWidth = Math.max(2, r * 0.13); c.strokeStyle = C.gold; c.stroke();
-      c.font = '400 ' + Math.round(r * 0.56) + 'px Bungee, sans-serif';
+      c.save();c.globalAlpha=.6;c.strokeStyle='#fff7e8';c.lineWidth=Math.max(1,r*.065);c.beginPath();c.moveTo(-r*.12,-r*1.10);c.lineTo(r*.10,-r*.74);c.stroke();c.restore();
+      c.font = '400 ' + Math.round(r * 0.43) + 'px Bungee, sans-serif';
       c.textAlign = 'center'; c.textBaseline = 'middle';
-      c.lineWidth = Math.max(2, r * 0.12); c.strokeStyle = '#6b0f3d'; c.strokeText('SOLO', 0, r * 0.1);
-      c.fillStyle = C.cream; c.fillText('SOLO', 0, r * 0.1);
+      c.lineWidth = Math.max(2, r * 0.12); c.strokeStyle = '#6b0f3d'; c.strokeText('BONUS', 0, r * 0.1);
+      c.fillStyle = C.cream; c.fillText('BONUS', 0, r * 0.1);
     }
   });
 }
@@ -1053,7 +1066,7 @@ function textBitmap(str) {
 }
 var LED_MSG = {
   title: textBitmap(' NA RÓŻOWO * FUNKY CAT * '),
-  solo: textBitmap('SOLO!'),
+  solo: textBitmap('BONUS'),
   brawo: textBitmap('BRAWO'),
   n3: textBitmap('3'), n2: textBitmap('2'), n1: textBitmap('1'), go: textBitmap('!')
 };
@@ -1485,7 +1498,7 @@ var bufs = [], decs = [], rawCache = [], loading = [];
 function initAudio() {
   var Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) { audioFailed = true; return; }
-  try { AC = new Ctx({ latencyHint: 'interactive' }); } catch (e) { AC = new Ctx(); }
+  try { AC = new Ctx({ latencyHint: 'interactive' }); } catch (e) { try { AC = new Ctx(); } catch (err) { audioFailed = true; AC = null; return; } }
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
   musicFilter = AC.createBiquadFilter(); musicFilter.type = 'lowpass'; musicFilter.frequency.value = 20000; musicFilter.Q.value = 0.7;
   musicGain = AC.createGain(); musicGain.gain.value = 0.8;
@@ -1799,7 +1812,7 @@ function onBad(n) {
 }
 function startSolo(n, t) {
   G.solo = true; G.soloUntil = META.soloEnd;
-  banner('SOLO!', { dur: 1.3, size: 1.1, col: C.gold, shade: C.pink, y: 0.4, sub: 'punkty ×2' });
+  banner('BONUS!', { dur: 1.3, size: 1.1, col: C.gold, shade: C.pink, y: 0.4, sub: 'punkty ×2' });
   G.flash = 0.55; G.flashCol = '255,120,200'; G.fx = PX + n.x * PW; G.fy = Y_CATCH;
   confetti(60, VW / 2, Y_SPAWN, VW * 0.4);
   G.ledMsg = 'solo'; G.ledMsgUntil = t + BEAT * 8;
@@ -1889,6 +1902,11 @@ function show(id, on) { $(id).hidden = !on; }
 var PANELS = ['start', 'stages', 'ranking', 'badges', 'selfie', 'contest', 'settings', 'calib'];
 var BACK_TO = { stages: 'start', ranking: 'start', badges: 'start', settings: 'start', selfie: 'start', contest: 'start', calib: 'settings' };
 function openPanel(id) {
+  if (stageStarting) {
+    stageStartEpoch++; stageStarting = false;
+    document.querySelectorAll('.stage.loading').forEach(function (b) { b.classList.remove('loading'); });
+    if (!audioReady && AC) { playBtn.disabled = false; playBtn.textContent = 'SPRÓBUJ PONOWNIE'; }
+  }
   if (screen === 'calib' && id !== 'calib') calibStop();
   PANELS.forEach(function (p) { show(p, p === id); });
   screen = id;
@@ -1951,12 +1969,18 @@ function renderStages() {
 }
 
 /* ---------- starting / stopping */
+var stageStarting = false, stageStartEpoch = 0;
 function startStage(si) {
+  if (stageStarting) return;
+  stageStarting = true;
+  var requestEpoch = ++stageStartEpoch;
   var unlock = unlockAudio();
   var btn = $('stageBtn' + si);
   if (btn) btn.classList.add('loading');
   if (si === 0 && !audioReady) { playBtn.disabled = true; playBtn.textContent = 'Ładuję muzykę…'; }
   Promise.all([unlock, loadStageAudio(si)]).then(function () {
+    if (requestEpoch !== stageStartEpoch) return;
+    stageStarting = false;
     if (btn) btn.classList.remove('loading');
     loadStageNotes(si);
     buf = bufs[si]; decDelay = decs[si];
@@ -1970,7 +1994,10 @@ function startStage(si) {
     try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(function (w) { wakeLock = w; }, function () {}); } catch (e) {}
     if (si + 1 < STAGES.length) fetchStage(si + 1).catch(function () {});
   }, function () {
+    if (requestEpoch !== stageStartEpoch) return;
+    stageStarting = false;
     if (btn) btn.classList.remove('loading');
+    if (si === 0 && !audioReady && AC) { audioFailed = true; playBtn.disabled = false; playBtn.textContent = 'SPRÓBUJ PONOWNIE'; }
     toast('Nie udało się wczytać muzyki. Sprawdź internet i spróbuj jeszcze raz.');
     refreshTitle();
   });
@@ -2019,7 +2046,7 @@ var BADGES = [
   { id: 'combo50', ic: '50', name: 'Combo 50', how: 'Złap 50 złotych nut z rzędu' },
   { id: 'combo100', ic: '100', name: 'Combo 100', how: 'Złap 100 złotych nut z rzędu' },
   { id: 'clean', ic: '0', name: 'Czyste ucho', how: 'Ukończ etap bez żadnego fałszu' },
-  { id: 'solo', ic: 'SOLO', name: 'Solista', how: 'Złap gwiazdę SOLO' },
+  { id: 'solo', ic: 'BONUS', name: 'Gwiazda bonusu', how: 'Złap gwiazdę BONUS' },
   { id: 'bonus', ic: '×2', name: 'Łowca akcentów', how: 'Złap wszystkie bonusy ×2 w etapie' },
   { id: 'star3', ic: '3★', name: 'Perfekcjonista', how: 'Zdobądź 3 gwiazdki w etapie' },
   { id: 'whole', ic: 'END', name: 'Cały utwór', how: 'Ukończ etap 3' },
@@ -2100,8 +2127,9 @@ function showResults() {
   $('results').scrollTop = 0;
   var spans = $('resStars').querySelectorAll('span');
   Array.prototype.forEach.call(spans, function (s) { s.className = ''; });
+  var resultRun = lastRun;
   for (var i = 0; i < stars; i++) (function (k) {
-    setTimeout(function () { spans[k].className = 'on'; if (AC && sfxOn) clap(AC.currentTime, 0.4 + k * 0.15); }, 450 + k * 320);
+    setTimeout(function () { if (G.mode !== 'results' || lastRun !== resultRun) return; spans[k].className = 'on'; if (AC && sfxOn) clap(AC.currentTime, 0.4 + k * 0.15); }, 450 + k * 320);
   })(i);
   var el = $('resScore'), target = G.score, t0 = performance.now();
   (function tick() {
@@ -2114,7 +2142,7 @@ function showResults() {
 function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
 function rankKey(si) { return 'rank' + (si + 1); }
 function rankRows(si, withRun) {
-  var rows = store.get(rankKey(si), []).map(function (r) { return { n: r.n, s: r.s, st: r.st || 0, me: false }; });
+  var rows = store.get(rankKey(si), []).filter(function (r) { return r && typeof r.n === 'string' && typeof r.s === 'number' && isFinite(r.s); }).map(function (r) { return { n: r.n, s: r.s, st: r.st || 0, me: false }; });
   if (withRun && lastRun && !lastRun.saved) rows.push({ n: 'Ty (ta runda)', s: lastRun.s, st: lastRun.stars, me: true });
   rows.sort(function (a, b) { return b.s - a.s; });
   return rows;
@@ -2180,7 +2208,7 @@ function refreshTitle() {
   if (audioReady) { playBtn.disabled = false; playBtn.textContent = totalStars() ? 'WRÓĆ NA SCENĘ' : 'WEJDŹ NA SCENĘ'; }
 }
 playBtn.addEventListener('click', function () {
-  if (!stageInfo(0).best && !stageInfo(0).stars) startStage(0);
+  if (!audioReady || (!stageInfo(0).best && !stageInfo(0).stars)) startStage(0);
   else openPanel('stages');
 });
 
@@ -2355,7 +2383,7 @@ $('selfieFile').addEventListener('change', function () {
     SELFIE = selfieFromUrls(u);
     var kept = saveSelfie(u);
     syncSelfieUI();
-    selfieMsg(kept ? 'Gotowe! Zobaczysz się na telebimie przy solówce i dużym combo.' : 'Gotowe, ale tylko do zamknięcia gry (brak miejsca w pamięci przeglądarki).');
+    selfieMsg(kept ? 'Gotowe! Zobaczysz się na telebimie podczas bonusu i dużym combo.' : 'Gotowe, ale tylko do zamknięcia gry (brak miejsca w pamięci przeglądarki).');
     if (!$('shareCard').hidden) SELFIE.happy.onload = function () { openCard(); };
     if (!$('shareCard').hidden && selfieReady(SELFIE.happy)) openCard();
   }).catch(function (e) {
@@ -2644,7 +2672,7 @@ $('pauseBtn').addEventListener('click', function (e) {
   pauseGesture = null; pauseGame('manual');
 });
 $('resumeBtn').addEventListener('click', resumeGame);
-$('restartBtn').addEventListener('click', function () { ctAbandon(); show('pause', false); startStage(STAGE); });
+$('restartBtn').addEventListener('click', function () { ctAbandon(); startStage(STAGE); });
 $('menuBtn').addEventListener('click', function () { ctAbandon(); toMenu('stages'); });
 $('againBtn').addEventListener('click', function () { startStage(STAGE); });
 $('stagesBtn').addEventListener('click', function () { toMenu('stages'); });
@@ -3362,8 +3390,8 @@ refreshTitle();
 requestAnimationFrame(frame);
 initAudio();
 var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([
-  document.fonts.load('40px Shrikhand', 'Funky Cat na różowo SOLO! BRAWO! Łż'),
-  document.fonts.load('20px Bungee', '0123456789 ×SOLO'),
+  document.fonts.load('40px Shrikhand', 'Funky Cat na różowo BONUS! BRAWO! Łż'),
+  document.fonts.load('20px Bungee', '0123456789 ×BONUS'),
   document.fonts.load('800 14px Outfit', 'Marcin Nowakowski ąęółżź'),
   document.fonts.load('600 14px Outfit', 'Marcin Nowakowski'),
   document.fonts.load('400 14px Outfit', 'a')
@@ -3376,7 +3404,9 @@ if (!AC) {
     refreshTitle();
   }, function () {
     audioFailed = true;
-    playBtn.textContent = 'Nie udało się wczytać muzyki';
+    playBtn.disabled = false;
+    playBtn.textContent = 'SPRÓBUJ PONOWNIE';
+    toast('Nie udało się wczytać muzyki. Sprawdź internet i spróbuj ponownie.');
   });
 }
 })();
