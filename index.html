@@ -1873,9 +1873,9 @@ function drawChorusLighting(t) {
   g.save();
   // Scene-only wash, drawn behind notes and controls for legibility.
   var wash = g.createLinearGradient(0, 0, VW, VH);
-  wash.addColorStop(0, 'rgba(68,110,255,' + (light.strength * 0.25) + ')');
-  wash.addColorStop(0.52, 'rgba(187,48,210,' + (light.strength * 0.18) + ')');
-  wash.addColorStop(1, 'rgba(255,98,151,' + (light.strength * 0.12) + ')');
+  wash.addColorStop(0, 'rgba(68,110,255,' + (light.strength * 0.48) + ')');
+  wash.addColorStop(0.52, 'rgba(187,48,210,' + (light.strength * 0.38) + ')');
+  wash.addColorStop(1, 'rgba(255,98,151,' + (light.strength * 0.26) + ')');
   g.fillStyle = wash; g.fillRect(0, 0, VW, VH);
   if (light.accent > 0) {
     var glow = g.createRadialGradient(VW * 0.5, SAFE_T + 18, 0, VW * 0.5, SAFE_T + 18, Math.max(VW, VH) * 0.75);
