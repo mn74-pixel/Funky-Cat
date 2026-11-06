@@ -298,6 +298,12 @@ input[type=range]{width:100%;accent-color:var(--pink);height:32px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .lang-quick{position:absolute;top:max(10px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:5;border:1px solid #d692bf77;border-radius:999px;background:#24102bdd;color:#fff3e6;padding:9px 13px;font:700 12px Outfit,sans-serif;cursor:pointer}.lang-quick:focus-visible{outline:2px solid #ffc23d;outline-offset:3px}
+/* Stage finish: warm surfaces and readable, tactile controls. */
+.start-deck{background:linear-gradient(155deg,rgba(75,36,73,.98),rgba(29,18,43,.98) 60%,rgba(17,12,30,.98));border-color:rgba(255,194,221,.3);box-shadow:0 26px 70px #09000d99,inset 0 1px 0 #fff4,inset 0 -1px 0 #ff78b51a}
+.set-label{padding-bottom:11px;border-bottom:1px solid #ffb4d026}
+.menu-btn{background:linear-gradient(160deg,#ffffff0e,#ffffff03);border-color:#ffbad01e;box-shadow:inset 0 1px 0 #ffffff0d}
+.scorecard{background:radial-gradient(ellipse at 50% 0,#ffbb7050,transparent 65%),linear-gradient(155deg,#4c2846,#21172f);border:1px solid #ffc97177;box-shadow:0 24px 65px #09000d99,inset 0 1px 0 #ffe7bb45}
+.score-big{text-shadow:0 3px 0 #793850,0 10px 32px #ffbd5840}.res-stars span.on{filter:drop-shadow(0 4px 12px #ffcc5baa)}
 </style>
 </head>
 <body>
@@ -3059,6 +3065,15 @@ function drawNotes(t, beatPos) {
       }
       g.restore();
     }
+    // Soft falling trail gives motion depth without touching hit detection.
+    if (n.st === 0 && n.k !== K_BAD && !reduceMotion) {
+      g.save(); g.globalAlpha = alpha * .24;
+      var trail = g.createLinearGradient(x,y-NOTE_R*2.8,x,y);
+      trail.addColorStop(0,'rgba(255,212,133,0)');
+      trail.addColorStop(1,n.k === K_RAIN || n.k === K_SOLO ? 'rgba(255,156,210,.9)' : 'rgba(255,222,144,.9)');
+      g.strokeStyle=trail;g.lineWidth=Math.max(2,NOTE_R*.16);g.lineCap='round';
+      g.beginPath();g.moveTo(x,y-NOTE_R*2.8);g.lineTo(x,y-NOTE_R*.65);g.stroke();g.restore();
+    }
     g.globalAlpha = alpha;
     var w = spr.w * sc, h = spr.h * sc;
     if (rot) {
@@ -3350,6 +3365,13 @@ function frame(nowMs) {
     if (G.ledGlitch > 0) { ledMode = 'spec'; tint = 'teal'; }
   }
   ledDim = (G.mode === 'play' && !G.solo) || G.mode === 'title';
+  if (G.mode === 'play' || G.mode === 'paused') {
+    g.save();
+    var edge=g.createLinearGradient(PX,0,PX+PW,0);
+    edge.addColorStop(0,'rgba(255,116,181,.065)');edge.addColorStop(.14,'rgba(255,116,181,0)');
+    edge.addColorStop(.86,'rgba(255,116,181,0)');edge.addColorStop(1,'rgba(255,193,105,.055)');
+    g.fillStyle=edge;g.fillRect(PX,Y_SPAWN,PW,Math.max(0,Y_CATCH-Y_SPAWN));g.restore();
+  }
   if (G.mode !== 'title') drawLED(ledMode, ledKey, now * 9, pulse, specCols, tint);
   if (G.mode !== 'title') drawFanCam(t, beatPos, pulse);
 
