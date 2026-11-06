@@ -3081,6 +3081,14 @@ function drawHeroScene(now, pulse) {
   var glow = g.createRadialGradient(x,y,0,x,y,r*1.7);
   glow.addColorStop(0,'rgba(255,70,155,.14)'); glow.addColorStop(1,'rgba(255,70,155,0)');
   g.fillStyle=glow; g.fillRect(x-r*1.7,y-r*1.7,r*3.4,r*3.4);
+  // A soft stage halo adds depth without moving the mascot.
+  g.save();
+  var halo = g.createRadialGradient(x,y,r*.44,x,y,r*1.22);
+  halo.addColorStop(0,'rgba(255,128,190,0)');
+  halo.addColorStop(.76,'rgba(255,128,190,.055)');
+  halo.addColorStop(1,'rgba(255,196,105,0)');
+  g.fillStyle=halo; g.beginPath();g.arc(x,y,r*1.22,0,TAU);g.fill();
+  g.restore();
   // Vinyl grooves add depth to the hero while retaining the original mascot.
   g.save();g.globalAlpha=.82;
   var disk=g.createRadialGradient(x-r*.2,y-r*.25,0,x,y,r*.82);
@@ -3092,6 +3100,16 @@ function drawHeroScene(now, pulse) {
     g.strokeStyle=j===1?'rgba(255,193,99,.24)':'rgba(255,122,182,.15)';g.lineWidth=j===1?2:1;
     g.beginPath();g.arc(x,y,r*(.86+j*.17),0,TAU);g.stroke();
   }
+  // Fine record-sleeve tick marks: a quiet frame around the hero.
+  g.save();g.translate(x,y);g.lineCap='round';
+  for(var tick=0;tick<48;tick++){
+    var angle=tick*TAU/48, inner=r*1.31, outer=inner+r*(tick%4===0?.035:.014);
+    g.strokeStyle=tick%4===0?'rgba(255,201,132,.34)':'rgba(255,184,216,.18)';
+    g.lineWidth=tick%4===0?1.5:1;g.beginPath();
+    g.moveTo(Math.cos(angle)*inner,Math.sin(angle)*inner);
+    g.lineTo(Math.cos(angle)*outer,Math.sin(angle)*outer);g.stroke();
+  }
+  g.restore();
   for(var i=0;i<9;i++) {
     var a=i*TAU/9 + (reduceMotion ? 0 : now*.055), rad=r*(i%2?1.23:1.04);
     var nx=x+Math.cos(a)*rad, ny=y+Math.sin(a)*rad;
@@ -3124,7 +3142,12 @@ function drawCatchStage(t,pulse) {
   g.restore();
 }
 function drawHUD(t) {
-  g.save();g.fillStyle='rgba(16,10,28,.88)';rr(g,PX+6,SAFE_T+10,PW-12,80,20);g.fill();g.strokeStyle='rgba(255,210,232,.13)';g.lineWidth=1;g.stroke();g.restore();
+  g.save();
+  var hudShade=g.createLinearGradient(0,SAFE_T+10,0,SAFE_T+90);
+  hudShade.addColorStop(0,'rgba(42,24,52,.96)');hudShade.addColorStop(1,'rgba(15,10,28,.93)');
+  g.shadowColor='rgba(0,0,0,.32)';g.shadowBlur=18;g.shadowOffsetY=5;
+  g.fillStyle=hudShade;rr(g,PX+6,SAFE_T+10,PW-12,80,20);g.fill();
+  g.shadowBlur=0;g.shadowOffsetY=0;g.strokeStyle='rgba(255,210,232,.22)';g.lineWidth=1;g.stroke();g.restore();
   var goalY = VH - SAFE_B - 45, goalW = PW - 32, gx = PX + 16;
   g.save();g.fillStyle='rgba(16,10,28,.9)';rr(g,gx,goalY,goalW,34,12);g.fill();
   g.textBaseline='middle';g.textAlign='left';g.font='800 10px Outfit';g.fillStyle=C.muted;
@@ -3146,7 +3169,7 @@ function drawHUD(t) {
   g.textBaseline = 'alphabetic'; g.textAlign = 'left';
   g.font = '800 10px Outfit, sans-serif';
   g.fillStyle = 'rgba(255,211,232,0.7)';
-  g.fillText('PUNKTY', bx, top + 12);
+  g.fillText(window.fcLanguage === 'en' ? 'SCORE' : 'PUNKTY', bx, top + 12);
   g.font = '400 ' + Math.round(clamp(PW * 0.07, 22, 32)) + 'px Bungee, sans-serif';
   g.lineJoin = 'round'; g.lineWidth = 5; g.strokeStyle = 'rgba(20,4,26,0.8)';
   var sTxt = fmt(Math.round(G.shown));
